@@ -1,17 +1,21 @@
 <template>
-  <div id="app">
-    <div class="headline">
-      <h1 id="name">
-        Anthony Buzzelli
-      </h1>
-      <p id="headline">
-        Awesome Developer that Rocks
-      </p>
-      <button id="button">
-        <NuxtLink to="/workPage">
+  <div>
+    <canvas ref="canvas" />
+    <div id="app">
+      <div class="headline">
+        <h1 id="name">
+          Anthony Buzzelli
+        </h1>
+        <p id="headline">
+          Awesome Developer that Rocks
+        </p>
+        <button id="button">
           View Work
-        </NuxtLink>
-      </button>
+          <!-- <NuxtLink to="/work">
+            View Work
+          </NuxtLink> -->
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -92,6 +96,7 @@ export default {
       0.1,
       1000)
     const renderer = new THREE.WebGLRenderer({
+      canvas: this.$refs.canvas,
       antialias: true
     })
 
@@ -99,7 +104,7 @@ export default {
 
     renderer.setSize(innerWidth, innerHeight)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    document.body.appendChild(renderer.domElement)
+    // document.body.appendChild(renderer.domElement)
 
     // eslint-disable-next-line no-new
     new OrbitControls(camera, renderer.domElement)
@@ -241,17 +246,23 @@ export default {
 
     gsap.to('#name', {
       opacity: 1,
-      duration: 2
+      duration: 1.5,
+      y: 0,
+      ease: 'power2.out'
     })
     gsap.to('#headline', {
       opacity: 1,
-      duration: 2,
-      delay: 0.3
+      duration: 1.5,
+      delay: 0.3,
+      y: 0,
+      ease: 'power2.out'
     })
     gsap.to('#button', {
       opacity: 1,
-      duration: 2,
-      delay: 0.6
+      duration: 1.5,
+      delay: 0.6,
+      y: 0,
+      ease: 'power2.out'
     })
 
     document.querySelector('#button')
@@ -276,7 +287,7 @@ export default {
           duration: 1,
           delay: 1.5,
           onComplete: () => {
-            this.$router.push('/workPage')
+            this.$router.push('/work')
           }
         })
       })
@@ -300,6 +311,11 @@ export default {
   overflow: hidden;
 }
 
+canvas {
+  display: block;
+  outline: none;
+}
+
 .headline {
   position: absolute;
   top: 50%;
@@ -319,6 +335,7 @@ h1 {
   text-transform: uppercase;
   color: rgb(157, 151, 151);
   opacity: 0;
+  transform: translateY(30px);
 }
 
 p {
@@ -327,6 +344,7 @@ p {
   font-weight: 600;
   line-height: 1;
   opacity: 0;
+  transform: translateY(30px);
 }
 
 button {
@@ -342,6 +360,7 @@ button {
   border-color: rgb(157, 151, 151);
   border-radius: 0.25em;
   opacity: 0;
+  transform: translateY(30px);
 }
 
 button:hover {
