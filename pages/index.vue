@@ -25,11 +25,12 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 // eslint-disable-next-line import/no-named-as-default
 import gsap from 'gsap'
-import * as dat from 'dat.gui'
+// import * as dat from 'dat.gui'
 export default {
   name: 'IndexPage',
+  layout: 'default',
   mounted () {
-    const gui = new dat.GUI()
+    // const gui = new dat.GUI()
     const world = {
       plane: {
         width: 500,
@@ -38,13 +39,13 @@ export default {
         heightSegments: 100
       }
     }
-    gui.add(world.plane, 'width', 1, 20).onChange(generatePlane)
+    // gui.add(world.plane, 'width', 1, 20).onChange(generatePlane)
 
-    gui.add(world.plane, 'height', 1, 20).onChange(generatePlane)
+    // gui.add(world.plane, 'height', 1, 20).onChange(generatePlane)
 
-    gui.add(world.plane, 'heightSegments', 1, 20).onChange(generatePlane)
+    // gui.add(world.plane, 'heightSegments', 1, 20).onChange(generatePlane)
 
-    gui.add(world.plane, 'widthSegments', 1, 20).onChange(generatePlane)
+    // gui.add(world.plane, 'widthSegments', 1, 20).onChange(generatePlane)
 
     function generatePlane () {
       planeMesh.geometry.dispose()
