@@ -25,6 +25,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 // eslint-disable-next-line import/no-named-as-default
 import gsap from 'gsap'
+import image from '~/assets/disc.png'
 // import * as dat from 'dat.gui'
 export default {
   name: 'IndexPage',
@@ -130,8 +131,15 @@ export default {
     scene.add(light)
 
     const starGeometry = new THREE.BufferGeometry()
+
+    const sprite = new THREE.TextureLoader().load(image)
     const starMaterial = new THREE.PointsMaterial({
-      color: 0xFFFFFF
+      color: 0xFFFFFF,
+      map: sprite,
+      size: 1.5,
+      // alphaTest: 0.5,
+      transparent: true,
+      sizeAttenuation: true
     })
 
     const starVertices = []
@@ -233,7 +241,6 @@ export default {
           }
         })
       }
-
       stars.rotateX(0.0005)
     }
 
@@ -315,6 +322,7 @@ export default {
 canvas {
   display: block;
   outline: none;
+  cursor: pointer;
 }
 
 .headline {
@@ -362,6 +370,7 @@ button {
   border-radius: 0.25em;
   opacity: 0;
   transform: translateY(30px);
+  cursor: pointer;
 }
 
 button:hover {

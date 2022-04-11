@@ -2,6 +2,7 @@
   <v-app dark>
     <h1>
       TESTing
+      <MaterialIconApps />
     </h1>
     <v-navigation-drawer
       v-model="drawer"
@@ -40,13 +41,13 @@
         <Nuxt />
       </v-container>
     </v-main>
-    <v-footer
+    <footer
       :absolute="!fixed"
       app
       color="teal lighten-1"
     >
       <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+    </footer>
   </v-app>
 </template>
 
@@ -59,12 +60,12 @@ export default {
       fixed: false,
       items: [
         {
-          icon: 'mdi-apps',
+          // icon: MaterialIconApps,
           title: 'Home',
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
+          // icon: MaterialIconApps,
           title: 'Work',
           to: '/work'
         }
