@@ -310,14 +310,14 @@ export default {
 </script>
 
 <style scoped>
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Poppins';
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
-}
+} */
 
 canvas {
   display: block;
@@ -376,5 +376,11 @@ button {
 button:hover {
   background-color: white;
   color: rgb(157, 151, 151);
+}
+
+@media screen and (max-width: 480px) and (orientation: portrait) {
+  p {
+    font-size: 4em;
+  }
 }
 </style>

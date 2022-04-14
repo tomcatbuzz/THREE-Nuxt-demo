@@ -1,54 +1,45 @@
+import { MyWorkComponent } from '../../AngularWebV2/src/app/my-work/my-work.component';
 <template>
-  <v-app dark>
-    <h1>
-      TESTing
-      <MaterialIconApps />
-    </h1>
-    <v-navigation-drawer
-      v-model="drawer"
-      temporary
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-app-bar
-      app
-      absolute
-      color="teal lighten-1"
-    >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
-    </v-app-bar>
-    <v-main>
-      <v-container>
+  <div>
+    <header>
+      <h1 id="title">
+        <MaterialIconApps />
+        <NuxtLink to="/">
+          Tomcatbuzz
+        </NuxtLink>
+      </h1>
+      <nav>
+        <ul class="menu">
+          <li>
+            <NuxtLink to="/">
+              Home
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/work">
+              Work
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/contact">
+              Contact
+            </NuxtLink>
+          </li>
+          <li>
+            <MaterialIconMenu id="menu" title="menu" />
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <div class="container">
         <Nuxt />
-      </v-container>
-    </v-main>
-    <footer
-      :absolute="!fixed"
-      app
-      color="teal lighten-1"
-    >
+      </div>
+    </main>
+    <footer>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </footer>
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -75,3 +66,64 @@ export default {
   }
 }
 </script>
+<style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins';
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  }
+
+  header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 2.5em;
+    width: 100%;
+  }
+
+  #title {
+    margin-right: auto;
+    font-size: 1.5em;
+  }
+
+  #title a {
+    color: black;
+    text-decoration: none;
+    list-style: none;
+  }
+
+  header li {
+    display: inline-block;
+    justify-content: space-between;
+  }
+
+  li a {
+    list-style: none;
+    text-decoration: none;
+    color: black;
+    font-size: 1em;
+    text-transform: uppercase
+  }
+
+  #menu {
+    color: blue;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+  }
+
+  footer {
+    display: flex;
+    height: 2.5em;
+    width: 100%;
+  }
+</style>

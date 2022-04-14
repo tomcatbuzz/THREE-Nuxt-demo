@@ -43,6 +43,9 @@ export default {
 
 <style scoped>
   .wrapper {
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
     height: 100vh;
     width: 100vw;
     background-color: black;
@@ -50,6 +53,7 @@ export default {
   }
 
   h1 {
+    position: relative;
     font-size: 5em;
     padding: 20px;
     color: white;
