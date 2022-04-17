@@ -112,6 +112,16 @@ export default {
     color: blue;
   }
 
+  .nuxt-link-exact-active:not(#title a) {
+    color: red;
+    font-weight: bold;
+    transform: scaleZ(2.5);
+  }
+
+  .nuxt-link-exact-active:not(#title a) {
+    transition: transform 2s, font-weight 1.5s, color 1s;
+  }
+
   .container {
     display: flex;
     justify-content: center;
