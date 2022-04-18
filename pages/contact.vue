@@ -46,7 +46,7 @@ export default {
     light.position.set(0, -1, 1)
     scene.add(light)
 
-    const boxGeometry = new THREE.BoxGeometry(1, 1, 1)
+    const boxGeometry = new THREE.BoxGeometry(10, 10, 10)
     const material = new THREE.MeshBasicMaterial({ color: 0x00FF00 })
     const mesh = new THREE.Mesh(boxGeometry, material)
     scene.add(mesh)
