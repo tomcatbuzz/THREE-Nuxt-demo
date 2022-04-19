@@ -46,6 +46,9 @@ export default {
         Montserrat: {
           wght: [0, 200, 0, 300, 0, 400, 1, 200, 1, 300],
           ital: [100]
+        },
+        Kanit: {
+          wght: [800]
         }
       }
     }]

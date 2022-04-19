@@ -29,47 +29,61 @@ import { MyWorkComponent } from '../../AngularWebV2/src/app/my-work/my-work.comp
             <MaterialIconMenu id="menu" title="menu" />
           </li> -->
         </ul>
-        <button
-          class="js-menu menu button-clear menu-white menu-spinkit"
-          aria-label="Site navigation"
-        >
-          <span class="menu-icon-line-1 menu-icon-line" />
-          <span class="menu-icon-line-2 menu-icon-line" />
-          <span class="menu-icon-line-3 menu-icon-line" />
+        <button class="menu-btn">
+          <div class="content">
+            <span class="text">show</span>
+            <span class="text">hide</span>
+          </div>
         </button>
       </nav>
     </header>
-    <div class="site-nav-overlay js-nav">
-      <div class="nav-content">
-        <div class="js-nav-header nav-header">
-          <span class="nav-header-text">Tobias Ahlin</span>
-          <div class="nav-header-line js-nav-header-line" />
-        </div>
-
-        <ul class="nav-categories">
-          <li class="nav-category js-nav-animate">
-            <a href="/" class="nav-link">Overview</a>
-          </li>
-          <li class="nav-category js-nav-animate">
-            <a href="/blog/" class="nav-link">Blog</a>
-          </li>
-          <li class="nav-category js-nav-animate">
-            <a href="/blog/tutorials/" class="nav-link">Tutorials</a>
-          </li>
-          <li class="nav-category js-nav-animate">
-            <a href="/speaking/" class="nav-link">Speaking</a>
-          </li>
-        </ul>
-
-        <div class="nav-sublinks js-nav-animate">
-          <div class="js-nav-animate">
-            <a class="nav-link nav-sublink" href="/moving-letters/">Moving Letters</a>
-            <a class="nav-link nav-sublink" href="/typesource/">TypeSource</a>
-            <a class="nav-link nav-sublink" href="/spinkit/">SpinKit</a>
+    <nav class="nav">
+      <div class="nav__inner">
+        <div class="nav--transition-slide" />
+        <div class="nav--items">
+          <div class="nav--item">
+            <div class="nav--item-link">
+              <a href="#" class="nav--link">
+                <span class="nav--link-text" data-text="projects">projects</span>
+                <div class="nav--link-icon">
+                  <svg class="icon">
+                    <use xlink:href="#arrow-right" />
+                  </svg>
+                </div>
+              </a>
+            </div>
+            <div class="nav--item-line" />
+          </div>
+          <div class="nav--item">
+            <div class="nav--item-link">
+              <a href="#" class="nav--link">
+                <span class="nav--link-text" data-text="about">about</span>
+                <div class="nav--link-icon">
+                  <svg class="icon">
+                    <use xlink:href="#arrow-right" />
+                  </svg>
+                </div>
+              </a>
+            </div>
+            <div class="nav--item-line" />
+          </div>
+          <div class="nav--item">
+            <div class="nav--item-link">
+              <a href="#" class="nav--link">
+                <span class="nav--link-text" data-text="contact">contact</span>
+                <div class="nav--link-icon">
+                  <svg class="icon">
+                    <use xlink:href="#arrow-right" />
+                  </svg>
+                </div>
+              </a>
+            </div>
+            <div class="nav--item-line" />
           </div>
         </div>
       </div>
-    </div>
+    </nav>
+
     <main>
       <div class="container">
         <Nuxt />
@@ -106,14 +120,102 @@ export default {
     }
   },
   mounted () {
-    const select = selector => document.querySelector(selector)
-    select('.js-menu').addEventListener('click', (e) => {
-      e.preventDefault()
-      gsap.to('.site-nav-overlay', {
-        opacity: 1,
-        ease: 'power1.Out'
-      })
+    const btn = document.querySelector('.menu-btn')
+
+    btn.addEventListener('click', () => {
+      if (btn.classList.contains('active')) {
+        btn.classList.remove('active')
+        hide()
+      } else {
+        btn.classList.add('active')
+        show()
+      }
     })
+
+    function show () {
+      const tl = gsap.timeline()
+
+      gsap.set('.nav__inner, .menu-btn', {
+        pointerEvents: 'none'
+      })
+
+      tl.fromTo(
+        '.nav--transition-slide',
+        {
+          scaleX: 0,
+          transformOrigin: 'left center'
+        },
+        {
+          duration: 0.5,
+          scaleX: 1,
+          ease: 'Expo.inOut'
+        }
+      )
+        .set('.nav__inner, .menu-btn', {
+          pointerEvents: 'all'
+        })
+        .fromTo(
+          '.nav--item-line',
+          {
+            scaleX: 0,
+            transformOrigin: 'left center'
+          },
+          {
+            duration: 0.65,
+            scaleX: 1,
+            ease: 'Expo.inOut',
+            stagger: 0.15
+          }
+        )
+        .fromTo(
+          '.nav--link',
+          {
+            translateY: '100%'
+          },
+          {
+            duration: 2.25,
+            translateY: 0,
+            ease: 'elastic.inOut',
+            stagger: 0.15
+          },
+          '-=1.65'
+        )
+    }
+
+    function hide () {
+      const tl = gsap.timeline()
+
+      gsap.set('.nav__inner, .menu-btn', {
+        pointerEvents: 'none'
+      })
+
+      tl.to('.nav--item-line', {
+        duration: 0.6,
+        scaleX: 0,
+        transformOrigin: 'right center',
+        ease: 'Expo.inOut',
+        stagger: -0.15
+      })
+        .to(
+          '.nav--link',
+          {
+            duration: 0.35,
+            translateY: '100%',
+            ease: 'Expo.inOut',
+            stagger: -0.15
+          },
+          0
+        )
+        .to('.nav--transition-slide', {
+          duration: 0.5,
+          transformOrigin: 'right center',
+          scaleX: 0,
+          ease: 'Expo.inOut'
+        })
+        .set(' .menu-btn', {
+          pointerEvents: 'all'
+        })
+    }
   }
 }
 </script>
@@ -166,87 +268,6 @@ ul {
   margin-right: 3em;
 }
 
-.button-clear {
-  border: none;
-  background-color: transparent;
-}
-
-.button-clear:focus {
-  outline: 0;
-}
-
-.menu {
-  transform: translateZ(100px);
-  top: 10px;
-  right: 10px;
-}
-
-.nav {
-  transform: translateZ(100px);
-}
-
-.menu-spinkit .menu-icon-line {
-  background-color: rgba(255, 255, 255, 0.7);
-}
-
-.menu-spinkit:hover > .menu-icon-line,
-.menu-spinkit.menu-active > .menu-icon-line {
-  background-color: #fff;
-}
-
-.menu {
-  position: absolute;
-  top: 0.5vmin;
-  right: 1.7vmin;
-  margin-left: 1em;
-  z-index: 2004;
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
-  width: 43px;
-  padding: 10px;
-  cursor: pointer;
-}
-
-.menu-hidden {
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.menu-icon-line {
-  display: block;
-  height: 2px;
-  width: 100%;
-  background-color: #a5acbc;
-  margin-bottom: 4px;
-  border-radius: 2px;
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    opacity 0.2s ease-out;
-  transform: translateZ(0);
-}
-
-.menu:hover > .menu-icon-line {
-  background-color: #8591ac;
-  transform: scaleX(1.2);
-}
-
-.menu-active > .menu-icon-line-1,
-.menu-active:hover > .menu-icon-line-1 {
-  transform: translateY(6px) rotateZ(-135deg);
-  background-color: #fff;
-}
-
-.menu-active > .menu-icon-line-2,
-.menu-active:hover > .menu-icon-line-2 {
-  opacity: 0;
-  background-color: #fff;
-}
-
-.menu-active > .menu-icon-line-3,
-.menu-active:hover > .menu-icon-line-3 {
-  transform: translateY(-6px) rotateZ(135deg);
-  background-color: #fff;
-}
-
 /* .nuxt-link-exact-active:not(#title a) {
     visibility: hidden;
   } */
@@ -262,199 +283,154 @@ ul {
 
 a:hover {
   color: green;
-  transform: scaleZ(2)
+  transform: scaleZ(2);
 }
 
-.site-nav-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
+.menu-btn {
+  border: none;
+  background: none;
+  position: absolute;
+  right: 30px;
+  top: 30px;
+  width: 50px;
+  height: 20px;
+  z-index: 10;
+  cursor: pointer;
+  overflow: hidden;
+}
+  .content {
+    position: relative;
     width: 100%;
     height: 100%;
-    z-index: 2003;
-    text-align: center;
-    font-size: 40px;
-    font-family: Inter, Source Sans Pro, Helvetica Neue, Arial, sans-serif;
-    font-weight: bold;
-    opacity: 0;
-    color: #fff;
+  }
+    .text {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) translateY(var(--translate-y));
+      transition: transform 150ms ease;
+      text-transform: uppercase;
+      font-weight: 800;
+      font-size: 0.675rem;
+      font-weight: bold;
+      font-family: "Montserrat";
+    }
+    .text:nth-child(1) {
+        --translate-y: 0;
+        color: rgb(19, 19, 19);
+    }
+    .text:nth-child(2) {
+        --translate-y: 150%;
+        color: rgb(235, 235, 235);
+    }
+  .active.content.text:nth-child(1) {
+    --translate-y: -150%;
+  }
+  .active.content.text:nth-child(2) {
+    --translate-y: 0;
+  }
+  .menu-btn:focus {
+    outline: none;
+  }
+
+.nav {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 5;
+}
+  .nav__inner {
+    width: 100%;
+    height: 100%;
     pointer-events: none;
-    overflow: hidden
-}
-.site-nav-overlay-search {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2002;
-    text-align: left;
-    font-family: Inter, Source Sans Pro, Helvetica Neue, Arial, sans-serif;
-    font-weight: bold;
-    opacity: 0;
-    color: #fff;
-    pointer-events: none;
-    overflow: scroll
-}
-.site-nav-active {
-    pointer-events: initial
-}
-.nav-content {
-    width: 620px;
-    max-width: 100%;
-    margin: 40px auto;
-    margin-top: 18vh;
-    padding: 0 60px;
-    box-sizing: border-box
-}
-@media all and (max-width: 600px) {
-    .nav-content {
-        padding-right: 30px;
-        padding-left: 30px;
-        font-size: 32px
+  }
+    .nav--items {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
-}
-@media all and (max-height: 720px) {
-    .nav-content {
-        margin-top: 15vh;
-        font-size: 32px
+      .nav--item {
+        position: relative;
+        width: 50%;
+        height: 120px;
+        margin-bottom: 2rem;
+        overflow: hidden;
+      }
+        &-link {
+          .nav--link {
+            display: block;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transform: translateY(100%);
+            &-text {
+              height: 100%;
+              position: relative;
+              font-family: "Kanit";
+              font-weight: 800;
+              font-size: 85px;
+              text-transform: uppercase;
+              letter-spacing: 6px;
+              color: transparent;
+              -webkit-text-stroke: 2px rgb(235, 235, 235);
+              &::after {
+                content: attr(data-text);
+                position: absolute;
+                left: 0;
+                top: 0;
+                color: rgb(235, 235, 235);
+                clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+                transition: clip-path 400ms ease;
+              }
+            }
+            &-icon {
+              transform: translateX(-35%);
+              opacity: 0;
+              transition: transform 250ms ease, opacity 100ms linear;
+              margin-left: 25px;
+              svg {
+                width: 100px;
+                height: 100px;
+                fill: rgb(235, 235, 235);
+              }
+            }
+            &:hover {
+              .nav--link-text::after {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+              }
+              .nav--link-icon {
+                transform: translateX(0%);
+                opacity: 1;
+              }
+            }
+          }
+        }
+        &-line {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          height: 2px;
+          width: 100%;
+          background: rgb(235, 235, 235);
+          transform: scaleX(0);
+        }
+      }
     }
-}
-@media all and (max-height: 600px) {
-    .nav-content {
-        margin-top: 10vh
+    .nav--transition-slide {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgb(19, 19, 19);
+      transform: scaleX(0);
     }
-}
-@media all and (max-height: 500px) {
-    .nav-content {
-        margin-top: 6vh
-    }
-}
-.nav-header {
-    width: 100%;
-    margin: 0 auto;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.4em;
-    font-weight: bold;
-    position: relative;
-    transform: translateZ(0)
-}
-.nav-header-line {
-    display: block;
-    height: 2px;
-    width: 100%;
-    z-index: -1;
-    background-color: #fff;
-    position: absolute;
-    top: 12px;
-    transform: scaleX(.3)
-}
-.nav-header-text {
-    padding: 0 10px;
-    z-index: 1;
-    position: relative;
-    background-color: #1f4954
-}
-.nav-categories {
-    padding: 20px 0 30px;
-    list-style-type: none;
-    overflow: hidden;
-    margin: 0 auto;
-    transform: translateZ(0)
-}
-.nav-category {
-    padding: 0;
-    position: relative;
-    display: block
-}
-.nav-link {
-    display: inline-block;
-    color: inherit;
-    padding: 27px 20px 30px;
-    letter-spacing: 1px;
-    text-decoration: none;
-    transition: color 0.25s ease-in-out;
-    transform: translateZ(0)
-}
-.nav-link:hover {
-    color: #566871
-}
-.nav-link:hover::after {
-    transform: scaleY(1)
-}
-.nav-link::after {
-    content: "";
-    background-color: #fff;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    transform: scaleY(0);
-    transform-origin: 0 100%;
-    transition: all 0.25s ease-in-out;
-    z-index: -1
-}
-@media all and (max-height: 720px) {
-    .nav-link {
-        padding-top: 20px;
-        padding-bottom: 20px
-    }
-}
-@media all and (max-height: 550px) {
-    .nav-link {
-        padding-top: 15px;
-        padding-bottom: 15px
-    }
-}
-@media all and (max-height: 450px) {
-    .nav-link {
-        padding-top: 10px;
-        padding-bottom: 10px
-    }
-}
-.nav-sublinks {
-    font-size: 0.4em;
-    color: #80bece;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    border-top: 2px solid #3e6c78;
-    border-bottom: 2px solid #3e6c78;
-    width: 100%;
-    text-align: center
-}
-@media all and (max-height: 550px) {
-    .nav-sublinks {
-        padding-top: 20px;
-        padding-bottom: 20px
-    }
-}
-@media all and (max-height: 450px) {
-    .nav-sublinks {
-        padding-top: 10px;
-        padding-bottom: 10px
-    }
-}
-.nav-sublink {
-    color: inherit;
-    text-decoration: none;
-    display: inline-block;
-    padding: 10px 0;
-    width: 32%;
-    vertical-align: middle
-}
-.nav-sublink:hover {
-    color: #3e6c78
-}
-.nav-sublink::after {
-    background-color: #80bece
-}
-.no-scroll {
-    overflow: hidden;
-    position: fixed;
-    height: 100%;
-    width: 100%
+  }
 }
 
 .container {
