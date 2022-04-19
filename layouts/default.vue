@@ -1,3 +1,4 @@
+/* eslint-disable no-tabs */
 import { MyWorkComponent } from '../../AngularWebV2/src/app/my-work/my-work.component';
 <template>
   <div>
@@ -83,7 +84,13 @@ import { MyWorkComponent } from '../../AngularWebV2/src/app/my-work/my-work.comp
         </div>
       </div>
     </nav>
-
+    <svg style="display: none">
+      <symbol id="arrow-right" viewBox="0 0 492.004 492.004">
+        <path
+          d="M484.14,226.886L306.46,49.202c-5.072-5.072-11.832-7.856-19.04-7.856c-7.216,0-13.972,2.788-19.044,7.856l-16.132,16.136c-5.068,5.064-7.86,11.828-7.86,19.04c0,7.208,2.792,14.2,7.86,19.264L355.9,207.526H26.58C11.732,207.526,0,219.15,0,234.002v22.812c0,14.852,11.732,27.648,26.58,27.648h330.496L252.248,388.926c-5.068,5.072-7.86,11.652-7.86,18.864c0,7.204,2.792,13.88,7.86,18.948l16.132,16.084c5.072,5.072,11.828,7.836,19.044,7.836c7.208,0,13.968-2.8,19.04-7.872l177.68-177.68c5.084-5.088,7.88-11.88,7.86-19.1C492.02,238.762,489.228,231.966,484.14,226.886z"
+        />
+      </symbol>
+    </svg>
     <main>
       <div class="container">
         <Nuxt />
@@ -139,47 +146,39 @@ export default {
         pointerEvents: 'none'
       })
 
-      tl.fromTo(
-        '.nav--transition-slide',
-        {
-          scaleX: 0,
-          transformOrigin: 'left center'
-        },
-        {
-          duration: 0.5,
-          scaleX: 1,
-          ease: 'Expo.inOut'
-        }
+      tl.fromTo('.nav--transition-slide', {
+        scaleX: 0,
+        transformOrigin: 'left center'
+      },
+      {
+        duration: 0.5,
+        scaleX: 1,
+        ease: 'Expo.inOut'
+      }
       )
         .set('.nav__inner, .menu-btn', {
           pointerEvents: 'all'
         })
-        .fromTo(
-          '.nav--item-line',
-          {
-            scaleX: 0,
-            transformOrigin: 'left center'
-          },
-          {
-            duration: 0.65,
-            scaleX: 1,
-            ease: 'Expo.inOut',
-            stagger: 0.15
-          }
+        .fromTo('.nav--item-line', {
+          scaleX: 0,
+          transformOrigin: 'left center'
+        },
+        {
+          duration: 0.65,
+          scaleX: 1,
+          ease: 'Expo.inOut',
+          stagger: 0.15
+        }
         )
-        .fromTo(
-          '.nav--link',
-          {
-            translateY: '100%'
-          },
-          {
-            duration: 2.25,
-            translateY: 0,
-            ease: 'elastic.inOut',
-            stagger: 0.15
-          },
-          '-=1.65'
-        )
+        .fromTo('.nav--link', {
+          translateY: '100%'
+        },
+        {
+          duration: 2.25,
+          translateY: 0,
+          ease: 'elastic.inOut',
+          stagger: 0.15
+        }, '-=1.65')
     }
 
     function hide () {
@@ -196,23 +195,19 @@ export default {
         ease: 'Expo.inOut',
         stagger: -0.15
       })
-        .to(
-          '.nav--link',
-          {
-            duration: 0.35,
-            translateY: '100%',
-            ease: 'Expo.inOut',
-            stagger: -0.15
-          },
-          0
-        )
+        .to('.nav--link', {
+          duration: 0.35,
+          translateY: '100%',
+          ease: 'Expo.inOut',
+          stagger: -0.15
+        }, 0)
         .to('.nav--transition-slide', {
           duration: 0.5,
           transformOrigin: 'right center',
           scaleX: 0,
           ease: 'Expo.inOut'
         })
-        .set(' .menu-btn', {
+        .set('.menu-btn', {
           pointerEvents: 'all'
         })
     }
@@ -298,40 +293,40 @@ a:hover {
   cursor: pointer;
   overflow: hidden;
 }
-  .content {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-    .text {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%) translateY(var(--translate-y));
-      transition: transform 150ms ease;
-      text-transform: uppercase;
-      font-weight: 800;
-      font-size: 0.675rem;
-      font-weight: bold;
-      font-family: "Montserrat";
-    }
-    .text:nth-child(1) {
-        --translate-y: 0;
-        color: rgb(19, 19, 19);
-    }
-    .text:nth-child(2) {
-        --translate-y: 150%;
-        color: rgb(235, 235, 235);
-    }
-  .active.content.text:nth-child(1) {
-    --translate-y: -150%;
-  }
-  .active.content.text:nth-child(2) {
-    --translate-y: 0;
-  }
-  .menu-btn:focus {
-    outline: none;
-  }
+.menu-btn .content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.menu-btn .content .text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) translateY(var(--translate-y));
+  transition: transform 150ms ease;
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 0.675rem;
+  font-weight: bold;
+  font-family: "Montserrat";
+}
+.menu-btn .content .text:nth-child(1) {
+  --translate-y: 0;
+  color: rgb(19, 19, 19);
+}
+.menu-btn .content .text:nth-child(2) {
+  --translate-y: 150%;
+  color: rgb(235, 235, 235);
+}
+.menu-btn.active .content.text:nth-child(1) {
+  --translate-y: -150%;
+}
+.menu-btn.active .content.text:nth-child(2) {
+  --translate-y: 0;
+}
+.menu-btn:focus {
+  outline: none;
+}
 
 .nav {
   position: fixed;
@@ -341,96 +336,94 @@ a:hover {
   height: 100vh;
   z-index: 5;
 }
-  .nav__inner {
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-  }
-    .nav--items {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-      .nav--item {
-        position: relative;
-        width: 50%;
-        height: 120px;
-        margin-bottom: 2rem;
-        overflow: hidden;
-      }
-        &-link {
-          .nav--link {
-            display: block;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            transform: translateY(100%);
-            &-text {
-              height: 100%;
-              position: relative;
-              font-family: "Kanit";
-              font-weight: 800;
-              font-size: 85px;
-              text-transform: uppercase;
-              letter-spacing: 6px;
-              color: transparent;
-              -webkit-text-stroke: 2px rgb(235, 235, 235);
-              &::after {
-                content: attr(data-text);
-                position: absolute;
-                left: 0;
-                top: 0;
-                color: rgb(235, 235, 235);
-                clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
-                transition: clip-path 400ms ease;
-              }
-            }
-            &-icon {
-              transform: translateX(-35%);
-              opacity: 0;
-              transition: transform 250ms ease, opacity 100ms linear;
-              margin-left: 25px;
-              svg {
-                width: 100px;
-                height: 100px;
-                fill: rgb(235, 235, 235);
-              }
-            }
-            &:hover {
-              .nav--link-text::after {
-                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-              }
-              .nav--link-icon {
-                transform: translateX(0%);
-                opacity: 1;
-              }
-            }
-          }
-        }
-        &-line {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          height: 2px;
-          width: 100%;
-          background: rgb(235, 235, 235);
-          transform: scaleX(0);
-        }
-      }
-    }
-    .nav--transition-slide {
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: rgb(19, 19, 19);
-      transform: scaleX(0);
-    }
-  }
+.nav .nav__inner {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.nav .nav__inner .nav--items {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.nav .nav__inner .nav--items .nav--item {
+  position: relative;
+  width: 50%;
+  height: 120px;
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+.nav .nav__inner .nav--items .nav--item-link .nav--link {
+  display: block;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transform: translateY(100%);
+}
+.nav .nav__inner .nav--items .nav--item-link .nav--link-text {
+  height: 100%;
+  position: relative;
+  font-family: "Kanit";
+  font-weight: 800;
+  font-size: 85px;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  color: transparent;
+  -webkit-text-stroke: 2px rgb(235, 235, 235);
+}
+.nav .nav__inner .nav--items .nav--item-link .nav--link-text::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: rgb(235, 235, 235);
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+  transition: clip-path 400ms ease;
+}
+.nav .nav__inner .nav--items .nav--item-link .nav--link-icon {
+  transform: translateX(-35%);
+  opacity: 0;
+  transition: transform 250ms ease, opacity 100ms linear;
+  margin-left: 25px;
+}
+.nav .nav__inner .nav--items .nav--item-link .nav--link-icon svg {
+  width: 100px;
+  height: 100px;
+  fill: rgb(235, 235, 235);
+}
+.nav
+  .nav__inner
+  .nav--items
+  .nav--item-link
+  .nav--link:hover
+  .nav--link-text::after {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+.nav .nav__inner .nav--items .nav--item-link .nav--link:hover .nav--link-icon {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+.nav .nav__inner .nav--items .nav--item-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: rgb(235, 235, 235);
+  transform: scaleX(0);
+}
+.nav .nav__inner .nav--transition-slide {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(19, 19, 19);
+  transform: scaleX(0);
 }
 
 .container {
