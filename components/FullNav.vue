@@ -1,59 +1,11 @@
-/* eslint-disable no-tabs */
 <template>
-  <div>
-    <header>
-      <h1 id="title">
-        <MaterialIconApps />
-        <NuxtLink to="/">
-          Tomcatbuzz
-        </NuxtLink>
-      </h1>
-      <nav>
-        <ul>
-          <li>
-            <NuxtLink to="/">
-              Home
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/work">
-              Work
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink to="/contact">
-              Contact
-            </NuxtLink>
-          </li>
-          <li>
-            <!-- <button class="menu-btn">
-              <div class="content">
-                <span class="text">show</span>
-                <span class="text">hide</span>
-              </div>
-            </button> -->
-          </li>
-          <!-- <li>
-            <MaterialIconMenu id="menu" title="menu" />
-          </li> -->
-        </ul>
-      </nav>
-    </header>
-    <div>
-      <button class="menu-btn">
-        <div class="content">
-          <span class="text">show</span>
-          <span class="text">hide</span>
-        </div>
-      </button>
-    </div>
-    <!-- <FullNav /> -->
-    <!-- <button class="menu-btn">
+  <div class="full-nav">
+    <button class="menu-btn">
       <div class="content">
         <span class="text">show</span>
         <span class="text">hide</span>
       </div>
-    </button> -->
+    </button>
     <nav class="nav">
       <div class="nav__inner">
         <div class="nav--transition-slide" />
@@ -107,42 +59,13 @@
         />
       </symbol>
     </svg>
-    <main>
-      <div class="container">
-        <Nuxt />
-      </div>
-    </main>
-    <footer>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </footer>
   </div>
 </template>
 
 <script>
 // eslint-disable-next-line import/no-named-as-default
 import gsap from 'gsap'
-// import FullNav from './components/FullNav'
 export default {
-  name: 'DefaultLayout',
-  data () {
-    return {
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          // icon: MaterialIconApps,
-          title: 'Home',
-          to: '/'
-        },
-        {
-          // icon: MaterialIconApps,
-          title: 'Work',
-          to: '/work'
-        }
-      ],
-      title: 'Tomcatbuzz'
-    }
-  },
   mounted () {
     const btn = document.querySelector('.menu-btn')
 
@@ -231,82 +154,9 @@ export default {
   }
 }
 </script>
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins";
-  -webkit-font-smoothing: antialiased;
-  overflow: hidden;
-}
 
-.full-nav {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: white;
-  visibility: true;
-  width: 100%;
-}
-
-header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  /* height: 2.5em; */
-  height: 3em;
-  width: 100%;
-  background-color: orange;
-}
-
-#title {
-  margin-right: auto;
-  font-size: 1.5em;
-}
-
-#title a {
-  color: black;
-  text-decoration: none;
-  list-style: none;
-}
-
-header li {
-  display: inline-block;
-  justify-content: space-between;
-}
-
-li a {
-  list-style: none;
-  text-decoration: none;
-  color: black;
-  font-size: 1em;
-  text-transform: uppercase;
-  margin-right: 2em;
-}
-
-ul {
-  margin-right: 3em;
-}
-
-/* .nuxt-link-exact-active:not(#title a) {
-    visibility: hidden;
-  } */
-
-.nuxt-link-exact-active:not(#title a) {
-  color: red;
-  font-weight: bold;
-}
-
-.nuxt-link-exact-active:not(#title a) {
-  transition: font-weight 1.5s, color 1s;
-}
-
-a:hover {
-  color: green;
-}
-
-.menu-btn {
+<style scoped>
+  .menu-btn {
   border: none;
   background: none;
   position: absolute;
@@ -391,7 +241,7 @@ a:hover {
 .nav .nav__inner .nav--items .nav--item-link .nav--link-text {
   height: 100%;
   position: relative;
-  font-family: "Kanit";
+  /* font-family: "Kanit"; */
   font-family: "Montserrat";
   font-weight: 800;
   font-size: 85px;
@@ -450,23 +300,5 @@ a:hover {
   height: 100%;
   background: rgb(19, 19, 19);
   transform: scaleX(0);
-}
-
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  background-color: black;
-}
-
-footer {
-  position: fixed;
-  bottom: 0;
-  display: flex;
-  background-color: white;
-  height: 2.5em;
-  width: 100%;
 }
 </style>
