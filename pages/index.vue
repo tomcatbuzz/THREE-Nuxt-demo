@@ -311,15 +311,6 @@ export default {
 </script>
 
 <style scoped>
-/* * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins';
-  -webkit-font-smoothing: antialiased;
-  overflow: hidden;
-} */
-
 canvas {
   display: block;
   outline: none;
