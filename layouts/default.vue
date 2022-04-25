@@ -1,4 +1,4 @@
-<template>
+<template id="page">
   <div>
     <header>
       <h1 id="title">
@@ -94,8 +94,8 @@ header {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  /* height: 2.5em; */
-  height: 3em;
+  height: 2.5em;
+  /* height: 3em; */
   width: 100%;
   background-color: orange;
 }
@@ -138,9 +138,47 @@ ul {
   font-weight: bold;
 }
 
-li a:hover {
+/* li a:hover {
   color: green;
   font-size: 1.2em;
+} */
+
+a {
+  background-image: linear-gradient(
+    to right,
+    #54b3d6,
+    #54b3d6 50%,
+    #000 50%
+  );
+  background-size: 200% 100%;
+  background-position: -100%;
+  /* display: inline-block; */
+  padding: 5px 0;
+  position: relative;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease-in-out;
+}
+
+a:before {
+  content: '';
+  background: #54b3d6;
+  display: block;
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  transition: all 0.3s ease-in-out;
+}
+
+a:hover {
+  background-position: 0;
+}
+
+a:hover::before {
+  width: 100%;
 }
 
 .container {
@@ -159,5 +197,28 @@ footer {
   background-color: white;
   height: 2.5em;
   width: 100%;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 400ms, transform 400ms;
+}
+
+.page-enter {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+}
+
+.page-enter-to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+.page-leave {
+    opacity: 1;
+}
+
+.page-leave-to {
+  opacity: 0;
 }
 </style>

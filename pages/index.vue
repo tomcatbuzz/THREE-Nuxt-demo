@@ -30,7 +30,7 @@ import image from '~/assets/disc.png'
 export default {
   name: 'IndexPage',
   layout: 'default',
-  transition: 'home',
+  // transition: 'home',
   mounted () {
     // const gui = new dat.GUI()
     const world = {
@@ -370,13 +370,13 @@ button:hover {
   color: rgb(157, 151, 151);
 }
 
-.home-enter-active, .home-leave-active {
-  transition: opacity .5s;
+/* .home-enter-active, .home-leave-active {
+  transition: opacity 1s;
 }
 
 .home-enter, .home-leave-active {
   opacity: 0;
-}
+} */
 
 @media screen and (max-width: 480px) and (orientation: portrait) {
   p {

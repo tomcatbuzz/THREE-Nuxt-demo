@@ -6,8 +6,8 @@
     <div class="imageWrap">
       <div v-for="n in 6" :key="n">
         <img src="~/assets/laptop.jpg" alt="laptop">
+        <p>DUDE Project</p>
       </div>
-      <p>DUDE Project</p>
     </div>
   </div>
 </template>
@@ -66,7 +66,7 @@ export default {
   .imageWrap {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
     opacity: 0;
     transform: translateY(30px);
   }
@@ -74,5 +74,13 @@ export default {
   img {
     object-fit: cover;
     height: 70vh;
+    justify-content: space-evenly;
+    margin: 1em;
+  }
+
+  p {
+    color: white;
+    text-transform: uppercase;
+    margin-left: 1em;
   }
 </style>
