@@ -26,7 +26,7 @@
           </li>
           <li>
             <button id="menu">
-              Bitch Button
+              Button
             </button>
           </li>
         </ul>
@@ -153,37 +153,9 @@ export default {
     }
   },
   mounted () {
-    // document.querySelector('#menu')
-    //   .addEventListener('click', () => {
-    //     // e.preventDefault()
-    //     gsap.fromTo('.overlay', {
-    //       scaleX: 0,
-    //       transformOrigin: 'left center'
-    //     },
-    //     {
-    //       duration: 0.6,
-    //       scaleX: 1,
-    //       // ease: 'power1.inOut'
-    //       ease: 'none'
-    //     })
-    //   })
-
-    // document.querySelector('.close')
-    //   .addEventListener('click', () => {
-    //     // e.preventDefault()
-    //     gsap.to('.overlay', {
-    //       scaleX: 1,
-    //       transformOrigin: 'right center'
-    //       duration: 0.6,
-    //       // ease: 'power1.inOut'
-    //       ease: 'none'
-    //     }
-
-    // try this here
-    document.querySelector('#menu')
-      .addEventListener('click', () => {
-        show()
-      })
+    document.querySelector('#menu').addEventListener('click', () => {
+      show()
+    })
     function show () {
       const tl = gsap.timeline()
 
@@ -191,15 +163,21 @@ export default {
         pointerEvents: 'none'
       })
 
-      tl.fromTo('.nav--transition-slide', {
-        scaleX: 0,
-        transformOrigin: 'left center'
-      },
-      {
-        duration: 0.5,
-        scaleX: 1,
-        ease: 'Expo.inOut'
-      }
+      gsap.set('.nav', {
+        autoAlpha: 1
+      })
+
+      tl.fromTo(
+        '.nav--transition-slide',
+        {
+          scaleX: 0,
+          transformOrigin: 'left center'
+        },
+        {
+          duration: 0.5,
+          scaleX: 1,
+          ease: 'Expo.inOut'
+        }
       )
         .set('.nav__inner', {
           pointerEvents: 'all'
@@ -223,13 +201,22 @@ export default {
           translateY: 0,
           ease: 'elastic.inOut',
           stagger: 0.15
-        }, '-=1.65')
+        },
+        '-=1.65'
+        )
+        .fromTo('.close', {
+          opacity: 0
+        },
+        {
+          duration: 0.65,
+          opacity: 1,
+          ease: 'power1.in'
+        })
     }
 
-    document.querySelector('.close')
-      .addEventListener('click', () => {
-        hide()
-      })
+    document.querySelector('.close').addEventListener('click', () => {
+      hide()
+    })
 
     function hide () {
       const tl = gsap.timeline()
@@ -250,18 +237,27 @@ export default {
           translateY: '100%',
           ease: 'Expo.inOut',
           stagger: -0.15
-        }, 0)
+        }, 0
+        )
+        .to('.close', {
+          opacity: 0,
+          duration: 0.4,
+          ease: 'power1.out'
+        })
         .to('.nav--transition-slide', {
           duration: 0.5,
           transformOrigin: 'right center',
           scaleX: 0,
           ease: 'Expo.inOut'
         })
+        .to('.nav', {
+          autoAlpha: 0
+        })
     }
   }
 }
 </script>
-<style>
+<style lang='scss'>
 * {
   margin: 0;
   padding: 0;
@@ -304,7 +300,7 @@ header li {
 
 li a {
   list-style: none;
-  text-decoration: none;
+  // text-decoration: none;
   color: black;
   font-size: 1em;
   text-transform: uppercase;
@@ -320,7 +316,6 @@ ul {
   } */
 
 .nuxt-link-exact-active:not(#title a) {
-  background-color: red;
   font-weight: bold;
   font-size: 1.2em;
 }
@@ -330,13 +325,8 @@ ul {
   font-size: 1.2em;
 } */
 
-a {
-  background-image: linear-gradient(
-    to right,
-    #54b3d6,
-    #54b3d6 50%,
-    #000 50%
-  );
+li a {
+  background-image: linear-gradient(to right, #54b3d6, #54b3d6 50%, #000 50%);
   background-size: 200% 100%;
   background-position: -100%;
   /* display: inline-block; */
@@ -348,7 +338,7 @@ a {
   transition: all 0.3s ease-in-out;
 }
 
-a:before {
+li a:before {
   content: '';
   background: #54b3d6;
   display: block;
@@ -360,11 +350,11 @@ a:before {
   transition: all 0.3s ease-in-out;
 }
 
-a:hover {
+li a:hover {
   background-position: 0;
 }
 
-a:hover::before {
+li a:hover::before {
   width: 100%;
 }
 
@@ -392,41 +382,21 @@ footer {
 }
 
 .page-enter {
-    opacity: 0;
-    transform: translate3d(0, 20px, 0);
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
 }
 
 .page-enter-to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
 .page-leave {
-    opacity: 1;
+  opacity: 1;
 }
 
 .page-leave-to {
   opacity: 0;
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  transform: scaleX(0);
-  z-index: 100;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.menu-content ul li {
-  display: flex;
-  flex-direction: column;
-  color: white
 }
 
 .close {
@@ -434,7 +404,7 @@ footer {
   top: 2em;
   right: 2em;
   padding: 0.5em;
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   text-transform: uppercase;
   background-color: transparent;
   color: rgb(157, 151, 151);
@@ -454,95 +424,93 @@ footer {
   width: 100%;
   height: 100vh;
   z-index: 5;
-}
-.nav .nav__inner {
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-.nav .nav__inner .nav--items {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.nav .nav__inner .nav--items .nav--item {
-  position: relative;
-  width: 50%;
-  height: 120px;
-  margin-bottom: 2rem;
-  overflow: hidden;
-}
-.nav .nav__inner .nav--items .nav--item-link .nav--link {
-  display: block;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  transform: translateY(100%);
-}
-.nav .nav__inner .nav--items .nav--item-link .nav--link-text {
-  height: 100%;
-  position: relative;
-  /* font-family: "Kanit"; */
-  font-family: "Montserrat";
-  font-weight: 800;
-  font-size: 85px;
-  text-transform: uppercase;
-  letter-spacing: 6px;
-  color: transparent;
-  -webkit-text-stroke: 2px rgb(235, 235, 235);
-}
-.nav .nav__inner .nav--items .nav--item-link .nav--link-text::after {
-  content: attr(data-text);
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: rgb(235, 235, 235);
-  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
-  transition: clip-path 400ms ease;
-}
-.nav .nav__inner .nav--items .nav--item-link .nav--link-icon {
-  transform: translateX(-35%);
-  opacity: 0;
-  transition: transform 250ms ease, opacity 100ms linear;
-  margin-left: 25px;
-}
-.nav .nav__inner .nav--items .nav--item-link .nav--link-icon svg {
-  width: 100px;
-  height: 100px;
-  fill: rgb(235, 235, 235);
-}
-.nav
-  .nav__inner
-  .nav--items
-  .nav--item-link
-  .nav--link:hover
-  .nav--link-text::after {
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-}
-.nav .nav__inner .nav--items .nav--item-link .nav--link:hover .nav--link-icon {
-  transform: translateX(0%);
-  opacity: 1;
-}
-
-.nav .nav__inner .nav--items .nav--item-line {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 2px;
-  width: 100%;
-  background: rgb(235, 235, 235);
-  transform: scaleX(0);
-}
-.nav .nav__inner .nav--transition-slide {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgb(19, 19, 19);
-  transform: scaleX(0);
+  visibility: hidden;
+  .nav__inner {
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    .nav--items {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .nav--item {
+        position: relative;
+        width: 50%;
+        height: 120px;
+        margin-bottom: 2rem;
+        overflow: hidden;
+        &-link {
+          .nav--link {
+            display: block;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transform: translateY(100%);
+            &-text {
+              height: 100%;
+              position: relative;
+              font-family: "Kanit", sans-serif;
+              font-weight: 800;
+              font-size: 85px;
+              text-transform: uppercase;
+              letter-spacing: 6px;
+              color: transparent;
+              -webkit-text-stroke: 2px rgb(235, 235, 235);
+              &::after {
+                content: attr(data-text);
+                position: absolute;
+                left: 0;
+                top: 0;
+                color: rgb(235, 235, 235);
+                clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+                transition: clip-path 400ms ease;
+              }
+            }
+            &-icon {
+              transform: translateX(-35%);
+              opacity: 0;
+              transition: transform 250ms ease, opacity 100ms linear;
+              margin-left: 25px;
+              svg {
+                width: 100px;
+                height: 100px;
+                fill: rgb(235, 235, 235);
+              }
+            }
+            &:hover {
+              .nav--link-text::after {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+              }
+              .nav--link-icon {
+                transform: translateX(0%);
+                opacity: 1;
+              }
+            }
+          }
+        }
+        &-line {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          height: 2px;
+          width: 100%;
+          background: rgb(235, 235, 235);
+          transform: scaleX(0);
+        }
+      }
+    }
+    .nav--transition-slide {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgb(19, 19, 19);
+      transform: scaleX(0);
+    }
+  }
 }
 </style>
