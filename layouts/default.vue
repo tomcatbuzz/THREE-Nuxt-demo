@@ -26,34 +26,13 @@
           </li>
           <li>
             <button id="menu">
-              Button
+              Menu
             </button>
           </li>
         </ul>
       </nav>
-      <!-- <FullNav /> -->
     </header>
-    <!-- <div class="overlay">
-      <div class="close">
-        <button class="close">
-          Close
-        </button>
-      </div>
-      <div class="menu-content">
-        <ul>
-          <li>Home</li>
-          <li>Work</li>
-          <li>Contact</li>
-        </ul>
-      </div>
-    </div> -->
-    <div class="full-nav">
-      <!-- <button class="menu-btn">
-        <div class="content">
-          <span class="text">show</span>
-          <span class="text">hide</span>
-        </div>
-      </button> -->
+    <div>
       <nav class="nav">
         <div class="nav__inner">
           <div class="nav--transition-slide" />
@@ -130,28 +109,6 @@ import gsap from 'gsap'
 // import FullNav from '@/components/FullNav'
 export default {
   name: 'DefaultLayout',
-  // components: {
-  //   FullNav
-  // },
-  data () {
-    return {
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          // icon: MaterialIconApps,
-          title: 'Home',
-          to: '/'
-        },
-        {
-          // icon: MaterialIconApps,
-          title: 'Work',
-          to: '/work'
-        }
-      ],
-      title: 'Tomcatbuzz'
-    }
-  },
   mounted () {
     document.querySelector('#menu').addEventListener('click', () => {
       show()
@@ -267,11 +224,6 @@ export default {
   overflow: hidden;
 }
 
-header li full-nav {
-  display: inline-block;
-  justify-content: space-between;
-}
-
 header {
   display: flex;
   justify-content: flex-end;
@@ -279,7 +231,7 @@ header {
   height: 2.5em;
   /* height: 3em; */
   width: 100%;
-  background-color: orange;
+  background-color: rgb(22, 81, 140);
 }
 
 #title {
@@ -300,7 +252,7 @@ header li {
 
 li a {
   list-style: none;
-  // text-decoration: none;
+  text-decoration: none;
   color: black;
   font-size: 1em;
   text-transform: uppercase;
@@ -309,6 +261,16 @@ li a {
 
 ul {
   margin-right: 3em;
+}
+
+button#menu {
+  text-transform: uppercase;
+  background-color: transparent;
+  font-size: 1em;
+  cursor: pointer;
+  // padding: 0.2em;
+  border: 0;
+  border-radius: 10px;
 }
 
 /* .nuxt-link-exact-active:not(#title a) {
