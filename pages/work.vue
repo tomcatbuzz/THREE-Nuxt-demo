@@ -4,9 +4,9 @@
       My Work
     </h1>
     <div class="imageWrap">
-      <div v-for="n in 6" :key="n">
-        <img src="~/assets/laptop.jpg" alt="laptop">
-        <p>DUDE Project</p>
+      <div v-for="project in projects" :key="project">
+        <img :src="project.image.url" alt="laptop">
+        <p>{{ project.title }}</p>
       </div>
     </div>
   </div>
@@ -15,8 +15,42 @@
 <script>
 // eslint-disable-next-line import/no-named-as-default
 import gsap from 'gsap'
+import laptopImg from '~/assets/laptop.jpg'
+import circuitImg from '~/assets/circuit.jpg'
+import codeImg from '~/assets/code.jpg'
+// import lightsImg from '~/assets/lights.jpeg'
 export default {
   name: 'WorkPage',
+  data () {
+    return {
+      projects: [
+        {
+          image: {
+            url: laptopImg
+          },
+          title: 'DUDE Project'
+        },
+        {
+          image: {
+            url: circuitImg
+          },
+          title: 'Circuit Project'
+        },
+        {
+          image: {
+            url: codeImg
+          },
+          title: 'Code Project'
+        }
+        // {
+        //   image: {
+        //     url: lightsImg
+        //   },
+        //   title: 'Light Project'
+        // }
+      ]
+    }
+  },
   mounted () {
     gsap.to('.wrapper', {
       opacity: 1,
@@ -55,7 +89,7 @@ export default {
   h1 {
     position: relative;
     font-size: 5em;
-    padding: 20px;
+    margin-left: 0.6em;
     color: white;
     font-family: 'Montserrat';
     text-transform: uppercase;
@@ -67,15 +101,19 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    align-content: center;
     opacity: 0;
     transform: translateY(30px);
+    /* height: 70vh; */
   }
 
   img {
     object-fit: cover;
-    height: 70vh;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
     margin: 1em;
+    /* margin-left: 0; */
+    height: 70vh;
+    width: 100%;
   }
 
   p {

@@ -369,8 +369,16 @@ footer {
   font-family: "Montserrat";
   text-transform: uppercase;
   background-color: transparent;
+  border-radius: 0.25em;
+  border-color: rgb(157, 151, 151);
   color: rgb(157, 151, 151);
   font-size: 1em;
+  cursor: pointer;
+}
+
+.close:hover {
+  background-color: white;
+  color: rgb(157, 151, 151);
 }
 
 @media screen and (max-width: 480px) and (orientation: portrait) {
