@@ -4,7 +4,7 @@
       My Work
     </h1>
     <div class="imageWrap">
-      <div v-for="project in projects" :key="project">
+      <div v-for="project in projects" :key="project.id">
         <img :src="project.image.url" alt="laptop">
         <p>{{ project.title }}</p>
       </div>

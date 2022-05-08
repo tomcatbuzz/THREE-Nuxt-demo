@@ -270,7 +270,15 @@ button#menu {
   cursor: pointer;
   // padding: 0.2em;
   border: 0;
+  // border-radius: 10px;
+}
+
+button#menu:hover {
+  padding: 0.2em;
+  // border: 1px solid red;
   border-radius: 10px;
+  background-color: white;
+  // font-size: 1.2em;
 }
 
 /* .nuxt-link-exact-active:not(#title a) {

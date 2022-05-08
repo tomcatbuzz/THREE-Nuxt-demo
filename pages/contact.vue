@@ -5,6 +5,10 @@
       <h1>
         contact
       </h1>
+      <div class="card">
+        <input type="text">
+        <label for="name">Name</label>
+      </div>
     </div>
   </div>
 </template>
@@ -173,7 +177,31 @@ export default {
 </script>
 
 <style scoped>
+  .wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center
+  }
+
+  .card {
+    width: 40vw;
+    height: 70vh;
+    border-radius: 10px;
+    border-color: white;
+    border-width: 1px;
+    background-color: blue;
+    opacity: 0.2;
+  }
+
   h1 {
     color: white;
+    text-transform: uppercase;
   }
 </style>
