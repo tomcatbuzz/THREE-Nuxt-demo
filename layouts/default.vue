@@ -99,7 +99,7 @@
     </main>
     <footer>
       <span>&copy; {{ new Date().getFullYear() }}</span>
-      <span class="social">Github</span>
+      <span class="social">Github Codepen Twitter</span>
     </footer>
   </div>
 </template>
