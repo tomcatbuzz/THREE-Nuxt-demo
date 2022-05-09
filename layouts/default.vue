@@ -99,6 +99,7 @@
     </main>
     <footer>
       <span>&copy; {{ new Date().getFullYear() }}</span>
+      <span class="social">Github</span>
     </footer>
   </div>
 </template>
@@ -231,7 +232,7 @@ header {
   height: 2.5em;
   /* height: 3em; */
   width: 100%;
-  background-color: rgb(22, 81, 140);
+  background-color: #119995;
 }
 
 #title {
@@ -278,6 +279,7 @@ button#menu:hover {
   // border: 1px solid red;
   border-radius: 10px;
   background-color: white;
+  // transform: scale(1.5);
   // font-size: 1.2em;
 }
 
@@ -296,7 +298,8 @@ button#menu:hover {
 } */
 
 li a {
-  background-image: linear-gradient(to right, #54b3d6, #54b3d6 50%, #000 50%);
+  // background-image: linear-gradient(to right, #54b3d6, #54b3d6 50%, #000 50%);
+  background-image: linear-gradient(to right, #88e614, #88e614 50%, #000 50%);
   background-size: 200% 100%;
   background-position: -100%;
   /* display: inline-block; */
@@ -310,7 +313,8 @@ li a {
 
 li a:before {
   content: '';
-  background: #54b3d6;
+  // background: #54b3d6;
+  background: #88e614;
   display: block;
   position: absolute;
   bottom: -3px;
@@ -341,9 +345,14 @@ footer {
   position: fixed;
   bottom: 0;
   display: flex;
-  background-color: white;
+  background-color: #119995;
   height: 2.5em;
   width: 100%;
+}
+
+footer span {
+  font-size: 1rem;
+  margin: 0.6em;
 }
 
 .page-enter-active,

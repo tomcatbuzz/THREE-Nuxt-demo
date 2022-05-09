@@ -6,8 +6,14 @@
         contact
       </h1>
       <div class="card">
-        <input type="text">
-        <label for="name">Name</label>
+        <div class="form">
+          <input v-model="contactName" class="input" type="text" placeholder="Name">
+          <input v-model="contactEmail" class="input" type="email" placeholder="Email">
+          <textarea v-model="contactMessage" class="input" rows="5" placeholder="Message" />
+          <button class="send">
+            Send
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -190,18 +196,47 @@ export default {
   align-items: center
   }
 
+  h1 {
+    color: white;
+    text-transform: uppercase;
+  }
+
   .card {
     width: 40vw;
     height: 70vh;
     border-radius: 10px;
-    border-color: white;
-    border-width: 1px;
-    background-color: blue;
-    opacity: 0.2;
+    /* border: 1px solid white; */
+    /* border: 4mm ridge rgba(211, 220, 50, .6); */
+    border: 4mm ridge rgba(17, 153, 149, 0.6);
+    /* background-color: blue; */
+    /* filter: blur(5px); */
+    /* opacity: 0.2; */
+    background-blend-mode: difference;
   }
 
-  h1 {
-    color: white;
-    text-transform: uppercase;
+  .form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  input {
+    font-size: 1.8rem;
+    width: 50%;
+    height: 2.2rem;
+    background: white;
+    margin: 1rem;
+  }
+
+  textarea {
+    font-size: 1.8rem;
+    width: 30%;
+    height: 3rem;
+    margin: 1rem;
+  }
+
+  .input {
+    color: black;
   }
 </style>
