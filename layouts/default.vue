@@ -99,7 +99,8 @@
     </main>
     <footer>
       <span>&copy; {{ new Date().getFullYear() }}</span>
-      <span class="social">Github Codepen Twitter</span>
+      <span class="social">Github Codepen Twitter</span><MaterialIconTwitter class="twitter" />
+      <MaterialIconGithub class="github" /><MaterialIconCodepen class="codepen" /><MaterialIconLinkedin class="linkedin" />
     </footer>
   </div>
 </template>
@@ -346,13 +347,32 @@ footer {
   bottom: 0;
   display: flex;
   background-color: #119995;
-  height: 2.5em;
+  height: 3em;
   width: 100%;
 }
 
 footer span {
   font-size: 1rem;
   margin: 0.6em;
+}
+
+.twitter {
+  padding: 0.15em;
+  background: white;
+  border-radius: 50%;
+  color: #1DA1F2;
+  // color: #657786;
+}
+
+.github {
+  padding: 0.15em;
+  background: white;
+  border-radius: 50%;
+  color: 4078c0;
+}
+
+.codepen {
+  color: #CCCCCC
 }
 
 .page-enter-active,
