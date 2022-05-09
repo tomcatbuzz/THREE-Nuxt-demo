@@ -88,3 +88,6 @@ sw.*
 
 # Vim swap files
 *.swp
+
+#config file
+plugins/firebase.js
