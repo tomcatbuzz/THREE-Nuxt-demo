@@ -98,9 +98,10 @@
       </div>
     </main>
     <footer>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-      <span class="social">Github Codepen Twitter</span><MaterialIconTwitter class="twitter" />
-      <MaterialIconGithub class="github" /><MaterialIconCodepen class="codepen" /><MaterialIconLinkedin class="linkedin" />
+      <span class="copy">&copy; {{ new Date().getFullYear() }}</span>
+      <MaterialIconTwitter class="twitter" />
+      <MaterialIconGithub title="Github" class="github" /><MaterialIconLinkedin class="linkedin" />
+      <MaterialIconCodepen class="codepen" />
     </footer>
   </div>
 </template>
@@ -368,11 +369,22 @@ footer span {
   padding: 0.15em;
   background: white;
   border-radius: 50%;
-  color: 4078c0;
+  color: #000000;
 }
 
 .codepen {
-  color: #CCCCCC
+  padding: 0.15em;
+  background: white;
+  border-radius: 50%;
+  // color: #CCCCCC;
+  color: #000000;
+}
+
+.linkedin {
+  padding: 0.15em;
+  background: white;
+  border-radius: 50%;
+  color: #0e76A8;
 }
 
 .page-enter-active,
