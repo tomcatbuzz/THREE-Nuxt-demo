@@ -99,9 +99,12 @@
     </main>
     <footer>
       <span class="copy">&copy; {{ new Date().getFullYear() }}</span>
-      <MaterialIconTwitter class="twitter" />
-      <MaterialIconGithub title="Github" class="github" /><MaterialIconLinkedin class="linkedin" />
-      <MaterialIconCodepen class="codepen" />
+      <div class="logos">
+        <a href="https://twitter.com/tomcatbuzz" rel="noopener noreferrer" target="_blank"><MaterialIconTwitter class="twitter" /></a>
+        <a href="https://github.com/tomcatbuzz" rel="noopener noreferrer" target="_blank"><MaterialIconGithub title="Github" class="github" /></a>
+        <a href="https://www.linkedin.com/in/anthony-buzzelli-8843ab21/" rel="noopener noreferrer" target="_blank"><MaterialIconLinkedin class="linkedin" /></a>
+        <a href="https://codepen.io/tomcatbuzz/" rel="noopener noreferrer" target="_blank"><MaterialIconCodepen class="codepen" /></a>
+      </div>
     </footer>
   </div>
 </template>
@@ -109,7 +112,10 @@
 <script>
 // eslint-disable-next-line import/no-named-as-default
 import gsap from 'gsap'
-// import FullNav from '@/components/FullNav'
+// import twitterImg from '~/assets/twitter.png'
+// import githubImg from '~/assets/github.png'
+// import linkedinImg from '~/assets/linkedin.png'
+// import codepenImg from '~/assets/codepen.png'
 export default {
   name: 'DefaultLayout',
   mounted () {
@@ -352,10 +358,46 @@ footer {
   width: 100%;
 }
 
-footer span {
-  font-size: 1rem;
+footer .copy {
+  font-size: 1.5rem;
   margin: 0.6em;
 }
+
+.logos {
+  position: absolute;
+  right: 0;
+}
+
+.logos a {
+  text-decoration: none;
+  padding: 0;
+  margin: 0.4em;
+  // position: relative;
+  display: inline-flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.logos .material-design-icon__svg {
+  // display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2em;
+  width: 2em;
+}
+
+// .logos img {
+//   width: 32px;
+//   height: 32px;
+//   padding: 0.15em;
+//   background: white;
+//   border-radius: 50%;
+//   cursor: pointer;
+// }
+
+// .logos a {
+//   visibility: hidden;
+// }
 
 .twitter {
   padding: 0.15em;
