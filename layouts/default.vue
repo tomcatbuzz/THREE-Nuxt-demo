@@ -100,10 +100,14 @@
     <footer>
       <span class="copy">&copy; {{ new Date().getFullYear() }}</span>
       <div class="logos">
-        <a href="https://twitter.com/tomcatbuzz" rel="noopener noreferrer" target="_blank"><MaterialIconTwitter class="twitter" /></a>
-        <a href="https://github.com/tomcatbuzz" rel="noopener noreferrer" target="_blank"><MaterialIconGithub title="Github" class="github" /></a>
-        <a href="https://www.linkedin.com/in/anthony-buzzelli-8843ab21/" rel="noopener noreferrer" target="_blank"><MaterialIconLinkedin class="linkedin" /></a>
-        <a href="https://codepen.io/tomcatbuzz/" rel="noopener noreferrer" target="_blank"><MaterialIconCodepen class="codepen" /></a>
+        <a title="Twitter" href="https://twitter.com/tomcatbuzz" rel="noopener noreferrer" target="_blank"><MaterialIconTwitter class="twitter" /></a>
+        <span class="tooltip">Twitter</span>
+        <a title="Github" href="https://github.com/tomcatbuzz" rel="noopener noreferrer" target="_blank"><MaterialIconGithub class="github" /></a>
+        <span class="tooltip">Github</span>
+        <a title="LinkedIn" href="https://www.linkedin.com/in/anthony-buzzelli-8843ab21/" rel="noopener noreferrer" target="_blank"><MaterialIconLinkedin class="linkedin" /></a>
+        <span class="tooltip">Linkedin</span>
+        <a title="Codepen" href="https://codepen.io/tomcatbuzz/" rel="noopener noreferrer" target="_blank"><MaterialIconCodepen class="codepen" /></a>
+        <span class="tooltip">Codepen</span>
       </div>
     </footer>
   </div>
@@ -112,12 +116,16 @@
 <script>
 // eslint-disable-next-line import/no-named-as-default
 import gsap from 'gsap'
+// import Tooltip from '~/components/Tooltip'
 // import twitterImg from '~/assets/twitter.png'
 // import githubImg from '~/assets/github.png'
 // import linkedinImg from '~/assets/linkedin.png'
 // import codepenImg from '~/assets/codepen.png'
 export default {
   name: 'DefaultLayout',
+  // components: {
+  //   Tooltip
+  // },
   mounted () {
     document.querySelector('#menu').addEventListener('click', () => {
       show()
@@ -360,7 +368,7 @@ footer {
 
 footer .copy {
   font-size: 1.5rem;
-  margin: 0.6em;
+  margin: 0.5em;
 }
 
 .logos {
@@ -386,18 +394,35 @@ footer .copy {
   width: 2em;
 }
 
-// .logos img {
-//   width: 32px;
-//   height: 32px;
-//   padding: 0.15em;
-//   background: white;
-//   border-radius: 50%;
-//   cursor: pointer;
-// }
+.logos .tooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1000;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -60px;
+}
 
-// .logos a {
-//   visibility: hidden;
-// }
+.logos .tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.logos .tooltip:hover {
+  visibility: visible;
+}
 
 .twitter {
   padding: 0.15em;
