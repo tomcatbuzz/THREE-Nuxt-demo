@@ -6,14 +6,14 @@
         contact
       </h1>
       <div class="card">
-        <div class="form">
+        <form class="form" @submit.prevent="sendMessage">
           <input v-model="contactName" class="input" type="text" placeholder="Name">
           <input v-model="contactEmail" class="input" type="email" placeholder="Email">
           <textarea v-model="contactMessage" class="input" rows="5" placeholder="Message" />
-          <button class="send">
+          <button type="submit" class="send">
             Send
           </button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -26,6 +26,26 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import gsap from 'gsap'
 export default {
   name: 'ContactPage',
+  data () {
+    return {
+      contactName: '',
+      contactEmail: '',
+      contactMessage: ''
+    }
+  },
+  methods () {
+    async sendMessage() {
+      try {
+        await this.$fire.firestore.collection('messages').adDoc({
+        contactName: this.contactName,
+        contactEmail: this.contactEmail,
+        contactMessage: this.contactMessage
+        })
+      } catch(e) {
+        console.log(e)
+        }
+    }
+  },
   mounted () {
     const raycaster = new THREE.Raycaster()
     const scene = new THREE.Scene()

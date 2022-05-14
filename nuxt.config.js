@@ -57,6 +57,26 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    [
+      '@nuxtjs/firebase',
+      {
+        config: {
+          apiKey: 'AIzaSyBR523bFu4MiQICSydeFFcb-OSjvRXEbJs',
+          authDomain: 'tomcatbuzzweb.firebaseapp.com',
+          projectId: 'tomcatbuzzweb',
+          storageBucket: 'tomcatbuzzweb.appspot.com',
+          messagingSenderId: '1005362535240',
+          appId: '1:1005362535240:web:bc50b914cd5106b008717d',
+          measurementId: 'G-3RTWSNN90M'
+        },
+        services: {
+          firestore: true,
+          functions: true,
+          storage: true,
+          analytics: true
+        }
+      }
+    ]
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
