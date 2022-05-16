@@ -9,6 +9,7 @@
         <form class="form" @submit.prevent="sendMessage">
           <input v-model="contactName" class="input" type="text" placeholder="Name">
           <input v-model="contactEmail" class="input" type="email" placeholder="Email">
+          <input v-model="contactSubject" class="input" type="text" placeholder="Subject">
           <textarea v-model="contactMessage" class="input" rows="5" placeholder="Message" />
           <button type="submit" class="send">
             Send
@@ -23,31 +24,21 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 // eslint-disable-next-line import/no-named-as-default
-import gsap from 'gsap'
+// import gsap from 'gsap'
+import { addDoc } from 'firebase/firestore'
+import messageColRef from '~/plugins/firebase'
 export default {
   name: 'ContactPage',
   data () {
     return {
-      contactName: '',
-      contactEmail: '',
-      contactMessage: ''
-    }
-  },
-  methods () {
-    async sendMessage() {
-      try {
-        await this.$fire.firestore.collection('messages').adDoc({
-        contactName: this.contactName,
-        contactEmail: this.contactEmail,
-        contactMessage: this.contactMessage
-        })
-      } catch(e) {
-        console.log(e)
-        }
+      contactName: null,
+      contactEmail: null,
+      contactSubject: null,
+      contactMessage: null
     }
   },
   mounted () {
-    const raycaster = new THREE.Raycaster()
+    // const raycaster = new THREE.Raycaster()
     const scene = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(
       70,
@@ -92,48 +83,48 @@ export default {
       renderer.render(scene, camera)
       // frame += 0.01
       // raycaster for point hover
-      raycaster.setFromCamera(mouse, camera)
-      const intersects = raycaster.intersectObject(mesh)
-      if (intersects.length > 0) {
-        const { color } = intersects[0].object.geometry.attributes
+      // raycaster.setFromCamera(mouse, camera)
+      // const intersects = raycaster.intersectObject(mesh)
+      // if (intersects.length > 0) {
+      //   const { color } = intersects[0].object.geometry.attributes
 
-        intersects[0].object.geometry.attributes.color.needsUpdate = true
+      //   intersects[0].object.geometry.attributes.color.needsUpdate = true
 
-        const initialColor = {
-          r: 0,
-          g: 0.19,
-          b: 0.4
-        }
+      //   const initialColor = {
+      //     r: 0,
+      //     g: 0.19,
+      //     b: 0.4
+      //   }
 
-        const hoverColor = {
-          r: 0.1,
-          g: 0.5,
-          b: 1
-        }
+      //   const hoverColor = {
+      //     r: 0.1,
+      //     g: 0.5,
+      //     b: 1
+      //   }
 
-        gsap.to(hoverColor, {
-          r: initialColor.r,
-          g: initialColor.g,
-          b: initialColor.b,
-          duration: 1,
-          onUpdate: () => {
-            // vertice 1
-            color.setX(intersects[0].face.a, hoverColor.r)
-            color.setY(intersects[0].face.a, hoverColor.g)
-            color.setZ(intersects[0].face.a, hoverColor.b)
+      //   gsap.to(hoverColor, {
+      //     r: initialColor.r,
+      //     g: initialColor.g,
+      //     b: initialColor.b,
+      //     duration: 1,
+      //     onUpdate: () => {
+      //       // vertice 1
+      //       color.setX(intersects[0].face.a, hoverColor.r)
+      //       color.setY(intersects[0].face.a, hoverColor.g)
+      //       color.setZ(intersects[0].face.a, hoverColor.b)
 
-            // vertice 2
-            color.setX(intersects[0].face.b, hoverColor.r)
-            color.setY(intersects[0].face.b, hoverColor.g)
-            color.setZ(intersects[0].face.b, hoverColor.b)
+      //       // vertice 2
+      //       color.setX(intersects[0].face.b, hoverColor.r)
+      //       color.setY(intersects[0].face.b, hoverColor.g)
+      //       color.setZ(intersects[0].face.b, hoverColor.b)
 
-            // vertice 3
-            color.setX(intersects[0].face.c, hoverColor.r)
-            color.setY(intersects[0].face.c, hoverColor.g)
-            color.setZ(intersects[0].face.c, hoverColor.b)
-          }
-        })
-      }
+      //       // vertice 3
+      //       color.setX(intersects[0].face.c, hoverColor.r)
+      //       color.setY(intersects[0].face.c, hoverColor.g)
+      //       color.setZ(intersects[0].face.c, hoverColor.b)
+      //     }
+      //   })
+      // }
       mesh.rotateX(0.005)
     }
 
@@ -198,6 +189,12 @@ export default {
       camera.updateProjectionMatrix()
       renderer.setSize(innerWidth, innerHeight)
     })
+  },
+  methods: {
+    async sendMessage () {
+      await addDoc(messageColRef, this.$data)
+      this.$router.push('/')
+    }
   }
 }
 </script>
@@ -258,5 +255,16 @@ export default {
 
   .input {
     color: black;
+    opacity: 0.5;
+    cursor: pointer;
+  }
+
+  .send {
+    text-transform: uppercase;
+    width: 6em;
+    height: 3em;
+    opacity: 0.5;
+    border-radius: 0.5em;
+    cursor: pointer;
   }
 </style>

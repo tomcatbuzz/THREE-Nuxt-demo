@@ -16,7 +16,12 @@
           </li>
           <li>
             <NuxtLink to="/work">
-              Work
+              Projects
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/about">
+              About
             </NuxtLink>
           </li>
           <li>
@@ -44,7 +49,8 @@
           <div class="nav--items">
             <div class="nav--item">
               <div class="nav--item-link">
-                <a href="#" class="nav--link">
+                <a id="link" class="nav--link" @click="$router.push('/work')">
+                  <!-- <span class="nav--link-text" data-text="projects">projects</span> -->
                   <span class="nav--link-text" data-text="projects">projects</span>
                   <div class="nav--link-icon">
                     <svg class="icon">
@@ -57,7 +63,7 @@
             </div>
             <div class="nav--item">
               <div class="nav--item-link">
-                <a href="#" class="nav--link">
+                <a id="aboutlink" class="nav--link" @click="$router.push('/about')">
                   <span class="nav--link-text" data-text="about">about</span>
                   <div class="nav--link-icon">
                     <svg class="icon">
@@ -70,7 +76,7 @@
             </div>
             <div class="nav--item">
               <div class="nav--item-link">
-                <a href="#" class="nav--link">
+                <a id="contactlink" class="nav--link" @click="$router.push('/contact')">
                   <span class="nav--link-text" data-text="contact">contact</span>
                   <div class="nav--link-icon">
                     <svg class="icon">
@@ -101,13 +107,13 @@
       <span class="copy">&copy; {{ new Date().getFullYear() }}</span>
       <div class="logos">
         <a title="Twitter" href="https://twitter.com/tomcatbuzz" rel="noopener noreferrer" target="_blank"><MaterialIconTwitter class="twitter" /></a>
-        <span class="tooltip">Twitter</span>
+        <!-- <span class="tooltip">Twitter</span> -->
         <a title="Github" href="https://github.com/tomcatbuzz" rel="noopener noreferrer" target="_blank"><MaterialIconGithub class="github" /></a>
-        <span class="tooltip">Github</span>
+        <!-- <span class="tooltip">Github</span> -->
         <a title="LinkedIn" href="https://www.linkedin.com/in/anthony-buzzelli-8843ab21/" rel="noopener noreferrer" target="_blank"><MaterialIconLinkedin class="linkedin" /></a>
-        <span class="tooltip">Linkedin</span>
+        <!-- <span class="tooltip">Linkedin</span> -->
         <a title="Codepen" href="https://codepen.io/tomcatbuzz/" rel="noopener noreferrer" target="_blank"><MaterialIconCodepen class="codepen" /></a>
-        <span class="tooltip">Codepen</span>
+        <!-- <span class="tooltip">Codepen</span> -->
       </div>
     </footer>
   </div>
@@ -187,6 +193,18 @@ export default {
           ease: 'power1.in'
         })
     }
+
+    document.querySelector('#link').addEventListener('click', () => {
+      hide()
+    })
+
+    document.querySelector('#aboutlink').addEventListener('click', () => {
+      hide()
+    })
+
+    document.querySelector('#contactlink').addEventListener('click', () => {
+      hide()
+    })
 
     document.querySelector('.close').addEventListener('click', () => {
       hide()
@@ -394,35 +412,35 @@ footer .copy {
   width: 2em;
 }
 
-.logos .tooltip {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1000;
-  bottom: 150%;
-  left: 50%;
-  margin-left: -60px;
-}
+// .logos .tooltip {
+//   visibility: hidden;
+//   width: 120px;
+//   background-color: black;
+//   color: #fff;
+//   text-align: center;
+//   border-radius: 6px;
+//   padding: 5px 0;
+//   position: absolute;
+//   z-index: 1000;
+//   bottom: 150%;
+//   left: 50%;
+//   margin-left: -60px;
+// }
 
-.logos .tooltip::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: black transparent transparent transparent;
-}
+// .logos .tooltip::after {
+//   content: "";
+//   position: absolute;
+//   top: 100%;
+//   left: 50%;
+//   margin-left: -5px;
+//   border-width: 5px;
+//   border-style: solid;
+//   border-color: black transparent transparent transparent;
+// }
 
-.logos .tooltip:hover {
-  visibility: visible;
-}
+// .logos .tooltip:hover {
+//   visibility: visible;
+// }
 
 .twitter {
   padding: 0.15em;
@@ -530,6 +548,7 @@ footer .copy {
         overflow: hidden;
         &-link {
           .nav--link {
+            cursor: pointer;
             display: block;
             text-decoration: none;
             display: flex;
