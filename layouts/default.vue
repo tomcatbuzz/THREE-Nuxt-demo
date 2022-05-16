@@ -87,6 +87,19 @@
               </div>
               <div class="nav--item-line" />
             </div>
+            <div class="nav--item">
+              <div class="nav--item-link">
+                <a id="homelink" class="nav--link" @click="$router.push('/')">
+                  <span class="nav--link-text" data-text="home">home</span>
+                  <div class="nav--link-icon">
+                    <svg class="icon">
+                      <use xlink:href="#arrow-right" />
+                    </svg>
+                  </div>
+                </a>
+              </div>
+              <div class="nav--item-line" />
+            </div>
           </div>
         </div>
       </nav>
@@ -206,6 +219,10 @@ export default {
       hide()
     })
 
+    document.querySelector('#homelink').addEventListener('click', () => {
+      hide()
+    })
+
     document.querySelector('.close').addEventListener('click', () => {
       hide()
     })
@@ -310,11 +327,8 @@ button#menu {
 
 button#menu:hover {
   padding: 0.2em;
-  // border: 1px solid red;
-  border-radius: 10px;
-  background-color: white;
-  // transform: scale(1.5);
-  // font-size: 1.2em;
+  border-radius: 5px;
+  background-color: #88e614;
 }
 
 /* .nuxt-link-exact-active:not(#title a) {
@@ -326,17 +340,10 @@ button#menu:hover {
   font-size: 1.2em;
 }
 
-/* li a:hover {
-  color: green;
-  font-size: 1.2em;
-} */
-
 li a {
-  // background-image: linear-gradient(to right, #54b3d6, #54b3d6 50%, #000 50%);
   background-image: linear-gradient(to right, #88e614, #88e614 50%, #000 50%);
   background-size: 200% 100%;
   background-position: -100%;
-  /* display: inline-block; */
   padding: 5px 0;
   position: relative;
   background-clip: text;
@@ -347,7 +354,6 @@ li a {
 
 li a:before {
   content: '';
-  // background: #54b3d6;
   background: #88e614;
   display: block;
   position: absolute;
@@ -515,8 +521,8 @@ footer .copy {
   color: rgb(157, 151, 151);
 }
 
-@media screen and (max-width: 480px) and (orientation: portrait) {
-  li:not(:nth-child(4)) {
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  li:not(:nth-child(5)) {
     display: none;
   }
 }
@@ -617,5 +623,31 @@ footer .copy {
       transform: scaleX(0);
     }
   }
+}
+
+@media screen and (max-width: 1150px) {
+    .nav .nav__inner .nav--items .nav--item-link .nav--link-text {
+      font-size: 40px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .nav .nav__inner .nav--items .nav--item-link .nav--link-text {
+      font-size: 25px;
+      -webkit-text-stroke: 1px rgb(235, 235, 235);
+    }
+    .nav .nav__inner .nav--items .nav--item {
+      width: 80%;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .nav .nav__inner .nav--items .nav--item-link .nav--link-text {
+      font-size: 20px;
+      -webkit-text-stroke: 0.5px rgb(235, 235, 235);
+    }
+    .nav .nav__inner .nav--items .nav--item {
+      width: 80%;
+    }
 }
 </style>
