@@ -3,7 +3,7 @@
     <h1>
       My Work
     </h1>
-    <div class="imageWrap">
+    <div class="imagewrap">
       <div v-for="project in projects" :key="project.id">
         <img :src="project.image.url" alt="laptop">
         <p>{{ project.title }}</p>
@@ -64,7 +64,7 @@ export default {
       y: 0,
       ease: 'power2.in'
     })
-    gsap.to('.imageWrap', {
+    gsap.to('.imagewrap', {
       opacity: 1,
       duration: 1.5,
       delay: 0.6,
@@ -84,6 +84,7 @@ export default {
     width: 100vw;
     background-color: black;
     opacity: 0;
+    overflow-y: scroll;
   }
 
   h1 {
@@ -97,11 +98,11 @@ export default {
     transform: translateY(30px);
   }
 
-  .imageWrap {
+  .imagewrap {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    align-content: center;
+    align-items: center;
     opacity: 0;
     transform: translateY(30px);
     /* height: 70vh; */
@@ -120,5 +121,19 @@ export default {
     color: white;
     text-transform: uppercase;
     margin-left: 1em;
+  }
+
+  @media screen and (max-width: 480px) and (orientation: portrait) {
+    h1 {
+      font-size: 3em;
+    }
+    .imagewrap {
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    img {
+      width: 80%;
+    }
   }
 </style>

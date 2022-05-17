@@ -3,7 +3,7 @@
     <canvas ref="canvas2" />
     <div class="wrapper">
       <h1>
-        contact
+        Reach Out
       </h1>
       <div class="card">
         <form class="form" @submit.prevent="sendMessage">
@@ -240,7 +240,7 @@ export default {
 
   input {
     font-size: 1.8rem;
-    width: 50%;
+    width: 80%;
     height: 2.2rem;
     background: white;
     margin: 1rem;
@@ -248,7 +248,7 @@ export default {
 
   textarea {
     font-size: 1.8rem;
-    width: 30%;
+    width: 80%;
     height: 3rem;
     margin: 1rem;
   }
@@ -266,5 +266,14 @@ export default {
     opacity: 0.5;
     border-radius: 0.5em;
     cursor: pointer;
+  }
+
+  @media screen and (max-width: 480px) and (orientation: portrait) {
+    .card {
+      width: 80vw;
+    }
+    input textarea {
+      width: 100%;
+    }
   }
 </style>
