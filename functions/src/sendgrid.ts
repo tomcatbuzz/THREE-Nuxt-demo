@@ -22,9 +22,10 @@ export const sendContactMessage = functions.firestore.document('/messages/{pushK
       from: 'firebase@tomcatbuzz.com',
       subject: 'You have a new contact request',
       text: `Your message content. \n
-          Sender's Name: ${newValue.contactName} \n
-          Sender's Email ${newValue.contactEmail} \n
-          Subject: ${newValue.contactSubject} \n
+          Sender's First Name: ${newValue.contactFirstName} \n
+          Sender's Last Name: ${newValue.contactLastName} \n
+          Sender's Email: ${newValue.contactEmail} \n
+          Sender's Phone: ${newValue.contactPhone} \n
           Content: ${newValue.contactMessage}`,
     }
     return sgMail.send(msg)

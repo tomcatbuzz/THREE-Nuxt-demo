@@ -1,11 +1,65 @@
 <template>
   <div>
     <canvas ref="canvas2" />
-    <div class="wrapper">
-      <h1>
-        Reach Out
-      </h1>
-      <div class="card">
+    <section>
+      <form class="wrapper" @submit.prevent="sendMessage">
+        <h2>
+          Contact Us
+        </h2>
+        <div class="row100">
+          <div class="col">
+            <label for="first name">First Name</label>
+            <div class="inputBox">
+              <!-- <label for="name">First Name</label> -->
+              <!-- <input placeholder="John Doe" type="text" name="" required> -->
+              <input v-model="contactFirstName" type="text" required>
+              <!-- <span class="text">First Name</span> -->
+              <span class="line" />
+            </div>
+          </div>
+          <div class="col">
+            <label for="last name">Last Name</label>
+            <div class="inputBox">
+              <input v-model="contactLastName" type="text" required>
+              <!-- <span class="text">Last Name</span> -->
+              <span class="line" />
+            </div>
+          </div>
+        </div>
+        <div class="row100">
+          <div class="col">
+            <label for="email">Email</label>
+            <div class="inputBox">
+              <input v-model="contactEmail" type="email" required>
+              <!-- <span class="text">Email</span> -->
+              <span class="line" />
+            </div>
+          </div>
+          <div class="col">
+            <label for="phone number">Phone Number</label>
+            <div class="inputBox">
+              <input v-model="contactPhone" type="number" name="" required>
+              <!-- <span class="text">Phone Number</span> -->
+              <span class="line" />
+            </div>
+          </div>
+        </div>
+        <div class="row100">
+          <div class="col">
+            <label for="message">Type your message here...</label>
+            <div class="inputBox textarea">
+              <textarea v-model="contactMessage" required />
+              <!-- <span class="text">Type your message here...</span> -->
+              <span class="line" />
+            </div>
+          </div>
+        </div>
+        <div class="row100">
+          <div class="col">
+            <input type="submit" value="send">
+          </div>
+        </div>
+      <!-- <div class="card">
         <form class="form" @submit.prevent="sendMessage">
           <input v-model="contactName" class="input" type="text" placeholder="Name">
           <input v-model="contactEmail" class="input" type="email" placeholder="Email">
@@ -15,8 +69,9 @@
             Send
           </button>
         </form>
-      </div>
-    </div>
+      </div> -->
+      </form>
+    </section>
   </div>
 </template>
 
@@ -31,9 +86,10 @@ export default {
   name: 'ContactPage',
   data () {
     return {
-      contactName: null,
+      contactFirstName: null,
+      contactLastName: null,
       contactEmail: null,
-      contactSubject: null,
+      contactPhone: null,
       contactMessage: null
     }
   },
@@ -200,34 +256,210 @@ export default {
 </script>
 
 <style scoped>
-  .wrapper {
+  section {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  text-align: center;
-  color: white;
+  /* color: white; */
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
-  align-items: center
+  align-items: center;
+  min-height: 90vh;
+  padding: 20px;
+  width: 100%;
+  /* background: #001923; */
   }
 
-  h1 {
-    color: white;
+  section:before {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(#ffeb3b, #e91e63);
+    border-radius: 50%;
+    transform: translate(-420px, -180px);
+  }
+
+  section:after {
+    content: '';
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    background: linear-gradient(#2196f3, #83d8ff);
+    border-radius: 50%;
+    transform: translate(400px, 180px);
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1000;
+    width: 100%;
+    max-width: 1000px;
+    padding: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    backdrop-filter: blur(25px);
+  }
+
+  .wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -40%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    pointer-events: none;
+    transform: skewX(-15deg);
+  }
+
+  .wrapper h2 {
+    color: #fff;
+    text-transform: uppercase;
+    width: 100%;
+    font-size: 3em;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .wrapper .row100 {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  .wrapper .row100 .col {
+    position: relative;
+    width: 100%;
+    padding: 0 10px;
+    margin: 30px 0 20px;
+  }
+
+  .wrapper .row100 .col label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5em;
+    letter-spacing: .1em;
+    color: #fff;
     text-transform: uppercase;
   }
 
-  .card {
+  .wrapper .row100 .col .inputBox {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    color: #fff;
+  }
+
+  .wrapper .row100 .col .inputBox input,
+  .wrapper .row100 .col .inputBox textarea {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    outline: none;
+    font-size: 1.2em;
+    padding: 0 10px;
+    z-index: 1;
+    color: #000;
+  }
+
+  .wrapper .row100 .col .inputBox .text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    line-height: 40px;
+    font-size: 18px;
+    padding: 0 10px;
+    display: block;
+    transform: translateY(0);
+    transition: all 0.2s ease-in-out;
+    pointer-events: none;
+  }
+
+  .wrapper .row100 .col .inputBox input:focus + .text,
+  .wrapper .row100 .col .inputBox input:valid + .text,
+  .wrapper .row100 .col .inputBox textarea:focus + .text,
+  .wrapper .row100 .col .inputBox textarea:valid + .text {
+    /* top: -35px;
+    left: -10px; */
+    transform: translateY(-30px);
+  }
+
+  .wrapper .row100 .col .inputBox .line {
+    position: absolute;
+    bottom: 0;
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #fff;
+    transition: 0.5s;
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  .wrapper .row100 .col .inputBox input:focus ~ .line,
+  .wrapper .row100 .col .inputBox input:valid ~ .line {
+    height: 100%;
+  }
+
+  .wrapper .row100 .col .inputBox textarea {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 10px 0;
+  }
+
+  .wrapper .row100 .col .inputBox textarea:focus ~ .line,
+  .wrapper .row100 .col .inputBox textarea:valid ~ .line {
+    height: 100%;
+  }
+
+  .wrapper .row100 .col input[type="submit"] {
+    border: none;
+    padding: 10px 40px;
+    cursor: pointer;
+    outline: none;
+    background: #fff;
+    color: #000;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.6em;
+    text-transform: uppercase;
+    border-radius: 24px;
+    letter-spacing: .1em;
+  }
+
+  @media screen and (max-width: 468px) {
+    section::before {
+      transform: translate(-200px, -180px);
+    }
+    section::after {
+      transform: translate(220px, 180px);
+    }
+    .wrapper {
+      padding: 20px;
+      backdrop-filter: blur(15px);
+    }
+    h2 {
+      font-size: 2.25em;
+    }
+  }
+
+  /* .card {
     width: 40vw;
     height: 70vh;
     border-radius: 10px;
-    /* border: 1px solid white; */
-    /* border: 4mm ridge rgba(211, 220, 50, .6); */
     border: 4mm ridge rgba(17, 153, 149, 0.6);
-    /* background-color: blue; */
-    /* filter: blur(5px); */
-    /* opacity: 0.2; */
     background-blend-mode: difference;
   }
 
@@ -275,5 +507,5 @@ export default {
     input textarea {
       width: 100%;
     }
-  }
+  } */
 </style>
