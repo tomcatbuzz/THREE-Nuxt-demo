@@ -261,9 +261,7 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* color: white; */
   display: flex;
-  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
   min-height: 90vh;
@@ -306,6 +304,7 @@ export default {
     border-radius: 10px;
     overflow: hidden;
     backdrop-filter: blur(25px);
+    height: 100%;
   }
 
   .wrapper::before {
@@ -367,32 +366,10 @@ export default {
     box-shadow: none;
     border: none;
     outline: none;
-    font-size: 1.2em;
+    font-size: 1.5em;
     padding: 0 10px;
     z-index: 1;
     color: #000;
-  }
-
-  .wrapper .row100 .col .inputBox .text {
-    position: absolute;
-    top: 0;
-    left: 0;
-    line-height: 40px;
-    font-size: 18px;
-    padding: 0 10px;
-    display: block;
-    transform: translateY(0);
-    transition: all 0.2s ease-in-out;
-    pointer-events: none;
-  }
-
-  .wrapper .row100 .col .inputBox input:focus + .text,
-  .wrapper .row100 .col .inputBox input:valid + .text,
-  .wrapper .row100 .col .inputBox textarea:focus + .text,
-  .wrapper .row100 .col .inputBox textarea:valid + .text {
-    /* top: -35px;
-    left: -10px; */
-    transform: translateY(-30px);
   }
 
   .wrapper .row100 .col .inputBox .line {
@@ -437,9 +414,20 @@ export default {
     text-transform: uppercase;
     border-radius: 24px;
     letter-spacing: .1em;
+    transition:  all .3s ease;
   }
 
-  @media screen and (max-width: 468px) {
+  .wrapper .row100 .col input[type="submit"]:hover {
+    color: #fff;
+    background: #88e614;
+    transform:  translateX(3px);
+  }
+
+  @media screen and (min-width: 320px) and (max-width: 468px) {
+    section {
+      margin-top: 50px;
+      overflow-y: scroll !important;
+    }
     section::before {
       transform: translate(-200px, -180px);
     }
@@ -450,62 +438,68 @@ export default {
       padding: 20px;
       backdrop-filter: blur(15px);
     }
-    h2 {
-      font-size: 2.25em;
+    .wrapper h2 {
+      font-size: 1.95em;
+    }
+    .wrapper .row100 .col label {
+      font-size: 1em;
     }
   }
 
-  /* .card {
-    width: 40vw;
-    height: 70vh;
-    border-radius: 10px;
-    border: 4mm ridge rgba(17, 153, 149, 0.6);
-    background-blend-mode: difference;
-  }
-
-  .form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  input {
-    font-size: 1.8rem;
-    width: 80%;
-    height: 2.2rem;
-    background: white;
-    margin: 1rem;
-  }
-
-  textarea {
-    font-size: 1.8rem;
-    width: 80%;
-    height: 3rem;
-    margin: 1rem;
-  }
-
-  .input {
-    color: black;
-    opacity: 0.5;
-    cursor: pointer;
-  }
-
-  .send {
-    text-transform: uppercase;
-    width: 6em;
-    height: 3em;
-    opacity: 0.5;
-    border-radius: 0.5em;
-    cursor: pointer;
-  }
-
-  @media screen and (max-width: 480px) and (orientation: portrait) {
-    .card {
-      width: 80vw;
+  @media screen and (min-width: 469px) and (max-width: 668px) {
+    /* section {
+      margin-top: 50px;
+    } */
+    .wrapper {
+      padding: 20px;
+      backdrop-filter: blur(15px);
     }
-    input textarea {
-      width: 100%;
+    .wrapper h2 {
+      font-size: 1.95em;
+    }
+    .wrapper .row100 .col label {
+      font-size: 1em;
+    }
+    section::before {
+      transform: translate(-300px, -180px);
+    }
+    section::after {
+      transform: translate(320px, 180px);
+    }
+  }
+
+  @media screen and (max-height: 500px) and (max-width: 950px) and (orientation: landscape) {
+    section {
+      height: 100vh;
+      margin-top: 40px;
+      overflow-y: scroll !important;
+    }
+    .wrapper {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      max-width: 800px;
+      height: 100vh;
+      overflow: visible !important;
+      padding: 20px;
+      backdrop-filter: blur(15px);
+    }
+    .wrapper h2 {
+      font-size: 1.95em;
+    }
+    .wrapper .row100 .col label {
+      font-size: 1em;
+    }
+  }
+
+  /* @media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
+    html {
+      transform: rotate(-90deg);
+      transform-origin: left top;
+      width: 100vh;
+      overflow-x: hidden;
+      position: absolute;
+      top: 100%;
+      left: 0;
     }
   } */
 </style>
