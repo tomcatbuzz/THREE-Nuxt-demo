@@ -480,7 +480,7 @@ footer .copy {
 
 .page-enter-active,
 .page-leave-active {
-  transition: opacity 400ms, transform 400ms;
+  transition: opacity 400ms, transform 400ms ease-in;
 }
 
 .page-enter {

@@ -2,7 +2,7 @@
   <div>
     <canvas ref="canvas2" />
     <section>
-      <form class="wrapper" @submit.prevent="sendMessage">
+      <form ref="form" class="wrapper" @submit.prevent="sendMessage">
         <h2>
           Contact Us
         </h2>
@@ -10,10 +10,7 @@
           <div class="col">
             <label for="first name">First Name</label>
             <div class="inputBox">
-              <!-- <label for="name">First Name</label> -->
-              <!-- <input placeholder="John Doe" type="text" name="" required> -->
               <input v-model="contactFirstName" type="text" required>
-              <!-- <span class="text">First Name</span> -->
               <span class="line" />
             </div>
           </div>
@@ -21,7 +18,6 @@
             <label for="last name">Last Name</label>
             <div class="inputBox">
               <input v-model="contactLastName" type="text" required>
-              <!-- <span class="text">Last Name</span> -->
               <span class="line" />
             </div>
           </div>
@@ -31,7 +27,6 @@
             <label for="email">Email</label>
             <div class="inputBox">
               <input v-model="contactEmail" type="email" required>
-              <!-- <span class="text">Email</span> -->
               <span class="line" />
             </div>
           </div>
@@ -39,7 +34,6 @@
             <label for="phone number">Phone Number</label>
             <div class="inputBox">
               <input v-model="contactPhone" type="number" name="" required>
-              <!-- <span class="text">Phone Number</span> -->
               <span class="line" />
             </div>
           </div>
@@ -49,7 +43,6 @@
             <label for="message">Type your message here...</label>
             <div class="inputBox textarea">
               <textarea v-model="contactMessage" required />
-              <!-- <span class="text">Type your message here...</span> -->
               <span class="line" />
             </div>
           </div>
@@ -59,19 +52,20 @@
             <input type="submit" value="send">
           </div>
         </div>
-      <!-- <div class="card">
-        <form class="form" @submit.prevent="sendMessage">
-          <input v-model="contactName" class="input" type="text" placeholder="Name">
-          <input v-model="contactEmail" class="input" type="email" placeholder="Email">
-          <input v-model="contactSubject" class="input" type="text" placeholder="Subject">
-          <textarea v-model="contactMessage" class="input" rows="5" placeholder="Message" />
-          <button type="submit" class="send">
-            Send
-          </button>
-        </form>
-      </div> -->
       </form>
     </section>
+    <div class="toast">
+      <div class="toast-content">
+        <div class="message">
+          <span class="text text-1">Success</span>
+          <span class="text text-2">Your Message Was Sent!</span>
+        </div>
+        <div class="icon">
+          <MaterialIconThumbUp class="thumbs" />
+        </div>
+      </div>
+      <div class="progress" />
+    </div>
   </div>
 </template>
 
@@ -79,7 +73,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 // eslint-disable-next-line import/no-named-as-default
-// import gsap from 'gsap'
+import gsap from 'gsap'
 import { addDoc } from 'firebase/firestore'
 import messageColRef from '~/plugins/firebase'
 export default {
@@ -192,19 +186,25 @@ export default {
       // console.log(mouse)
     })
 
-    // gsap.to('#name', {
-    //   opacity: 1,
-    //   duration: 1.5,
-    //   y: 0,
-    //   ease: 'power2.out'
-    // })
-    // gsap.to('#headline', {
-    //   opacity: 1,
-    //   duration: 1.5,
-    //   delay: 0.3,
-    //   y: 0,
-    //   ease: 'power2.out'
-    // })
+    gsap.to('section', {
+      opacity: 1,
+      duration: 1.5,
+      ease: 'power2.out'
+    })
+    gsap.to('.wrapper h2', {
+      opacity: 1,
+      duration: 1.5,
+      delay: 0.3,
+      y: 0,
+      ease: 'power2.out'
+    })
+    gsap.to('.wrapper .row100 .col label', {
+      opacity: 1,
+      duration: 1.5,
+      delay: 0.4,
+      y: 0,
+      ease: 'power2.out'
+    })
     // gsap.to('#button', {
     //   opacity: 1,
     //   duration: 1.5,
@@ -249,7 +249,12 @@ export default {
   methods: {
     async sendMessage () {
       await addDoc(messageColRef, this.$data)
-      this.$router.push('/')
+      await this.$refs.form.reset()
+      await this.initToast()
+      // this.$router.push('/')
+    },
+    initToast () {
+      alert('Dude')
     }
   }
 }
@@ -268,6 +273,7 @@ export default {
   padding: 20px;
   width: 100%;
   /* background: #001923; */
+  opacity: 0;
   }
 
   section:before {
@@ -305,6 +311,8 @@ export default {
     overflow: hidden;
     backdrop-filter: blur(25px);
     height: 100%;
+    /* opacity: 0;
+    transform: translateY(30px); */
   }
 
   .wrapper::before {
@@ -326,6 +334,8 @@ export default {
     font-size: 3em;
     text-align: center;
     margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(30px);
   }
 
   .wrapper .row100 {
@@ -348,6 +358,8 @@ export default {
     letter-spacing: .1em;
     color: #fff;
     text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(30px);
   }
 
   .wrapper .row100 .col .inputBox {
@@ -425,7 +437,7 @@ export default {
 
   @media screen and (min-width: 320px) and (max-width: 468px) {
     section {
-      margin-top: 50px;
+      /* margin-top: 50px; */
       overflow-y: scroll !important;
     }
     section::before {
@@ -440,6 +452,9 @@ export default {
     }
     .wrapper h2 {
       font-size: 1.95em;
+    }
+    .wrapper .row100 .col {
+      margin: 15px 0 10px;
     }
     .wrapper .row100 .col label {
       font-size: 1em;
@@ -486,20 +501,82 @@ export default {
     .wrapper h2 {
       font-size: 1.95em;
     }
+    .wrapper .row100 .col {
+      margin: 15px 0 10px;
+    }
     .wrapper .row100 .col label {
       font-size: 1em;
     }
   }
 
-  /* @media screen and (min-width: 320px) and (max-width: 767px) and (orientation: landscape) {
-    html {
-      transform: rotate(-90deg);
-      transform-origin: left top;
-      width: 100vh;
-      overflow-x: hidden;
-      position: absolute;
-      top: 100%;
-      left: 0;
+  .toast {
+    position:absolute;
+    top:25px;
+    right:30px;
+    border-radius:5px;
+    background: #fff;
+    padding:20px 35px 20px 25px;
+    box-shadow:0 5px 10px rgba(0,0,0,0.1);
+    border-right:6px solid #6af440;
+    overflow:hidden;
+    transform:translateX(calc(100% + 30px));
+    transition: all 0.5s cubic-bezier(0.68,-0.55,0.265,1.35);
+  }
+  .toast.active {
+    transform:translateX(0%);
+  }
+  .toast .toast-content {
+    display:flex;
+    align-items: center;
+  }
+  .toast-content .check{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    height:40px;
+    width:40px;
+    background-color: #6af440;
+    color:#fff;
+    font-size:20px;
+    border-radius:10%;
+  }
+  .toast-content .message{
+    display:flex;
+    flex-direction: column;
+    margin:0 20px;
+  }
+  .message .text{
+    font-size:20px;
+    font-weight:400;
+    color:#666;
+  }
+  .message .text.text-1{
+    font-weight:600;
+    color:#333;
+  }
+  .toast .progress{
+    position:absolute;
+    bottom:0;
+    right:0;
+    height:4px;
+    width:100%;
+    background: #ddd;
+  }
+  .toast .progress:before{
+    content:'';
+    position:absolute;
+    bottom:0;
+    left:0;
+    height:100%;
+    width:100%;
+    background: #6af440;
+  }
+  .progress.active:before{
+    animation:progress 5s linear forwards;
+  }
+  @keyframes progress{
+    100%{
+        left:100%;
     }
-  } */
+  }
 </style>
