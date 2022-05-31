@@ -186,25 +186,27 @@ export default {
       // console.log(mouse)
     })
 
-    gsap.to('section', {
-      opacity: 1,
-      duration: 1.5,
-      ease: 'power2.out'
-    })
+    // CURRENT comment for TEST blur
+    // gsap.to('section', {
+    //   opacity: 1,
+    //   duration: 1.5,
+    //   ease: 'power2.out'
+    // })
     gsap.to('.wrapper h2', {
       opacity: 1,
       duration: 1.5,
-      delay: 0.3,
+      delay: 1,
       y: 0,
       ease: 'power2.out'
     })
     gsap.to('.wrapper .row100 .col label', {
       opacity: 1,
       duration: 1.5,
-      delay: 0.4,
+      delay: 1.2,
       y: 0,
       ease: 'power2.out'
     })
+
     // gsap.to('#button', {
     //   opacity: 1,
     //   duration: 1.5,
@@ -273,7 +275,7 @@ export default {
   padding: 20px;
   width: 100%;
   /* background: #001923; */
-  opacity: 0;
+  /* opacity: 0; */
   }
 
   section:before {
@@ -437,7 +439,7 @@ export default {
 
   @media screen and (min-width: 320px) and (max-width: 468px) {
     section {
-      /* margin-top: 50px; */
+      margin-top: 50px;
       overflow-y: scroll !important;
     }
     section::before {

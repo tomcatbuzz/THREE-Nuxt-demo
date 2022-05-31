@@ -485,12 +485,12 @@ footer .copy {
 
 .page-enter {
   opacity: 0;
-  transform: translate3d(0, 20px, 0);
+  // transform: translate3d(0, 20px, 0);
 }
 
 .page-enter-to {
   opacity: 1;
-  transform: translate3d(0, 0, 0);
+  // transform: translate3d(0, 0, 0);
 }
 
 .page-leave {
