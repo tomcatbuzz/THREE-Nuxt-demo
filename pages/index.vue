@@ -336,6 +336,7 @@ h1 {
   text-transform: uppercase;
   color: rgb(157, 151, 151);
   opacity: 0;
+  will-change: transform;
   transform: translateY(30px);
 }
 
@@ -345,6 +346,7 @@ p {
   font-weight: 600;
   line-height: 1;
   opacity: 0;
+  will-change: transform;
   transform: translateY(30px);
 }
 
@@ -361,6 +363,7 @@ button {
   border-color: rgb(157, 151, 151);
   border-radius: 0.25em;
   opacity: 0;
+  will-change: tranform;
   transform: translateY(30px);
   cursor: pointer;
 }

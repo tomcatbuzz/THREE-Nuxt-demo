@@ -379,6 +379,7 @@ li a:hover::before {
   width: 100vw;
   height: 100vh;
   background-color: black;
+  overflow-y: hidden;
 }
 
 footer {
@@ -480,7 +481,7 @@ footer .copy {
 
 .page-enter-active,
 .page-leave-active {
-  transition: opacity 400ms, transform 400ms ease-in;
+  transition: opacity 800ms, transform 800ms ease-in;
 }
 
 .page-enter {

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <canvas ref="canvas2" />
-    <section>
-      <form ref="form" class="wrapper" @submit.prevent="sendMessage">
+    <!-- <canvas ref="canvas2" /> -->
+    <section id="section">
+      <form ref="form" class="wrapper" autocomplete="off" @submit.prevent="sendMessage">
         <h2>
           Contact Us
         </h2>
@@ -49,12 +49,16 @@
         </div>
         <div class="row100">
           <div class="col">
-            <input type="submit" value="send">
+            <input class="sendBtn" type="submit" value="send">
           </div>
         </div>
       </form>
+      <Toast id="toast" key="toast" />
+      <button id="test">
+        TEST
+      </button>
     </section>
-    <div class="toast">
+    <!-- <div class="toast-container">
       <div class="toast-content">
         <div class="message">
           <span class="text text-1">Success</span>
@@ -65,7 +69,7 @@
         </div>
       </div>
       <div class="progress" />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -75,9 +79,13 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 // eslint-disable-next-line import/no-named-as-default
 import gsap from 'gsap'
 import { addDoc } from 'firebase/firestore'
+import Toast from '~/components/Toast.vue'
 import messageColRef from '~/plugins/firebase'
 export default {
   name: 'ContactPage',
+  components: {
+    Toast
+  },
   data () {
     return {
       contactFirstName: null,
@@ -88,6 +96,11 @@ export default {
     }
   },
   mounted () {
+    const vw = window.innerWidth
+    gsap.set('#toast', {
+      autoAlpha: 0,
+      translateX: vw * 1
+    })
     // const raycaster = new THREE.Raycaster()
     const scene = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(
@@ -197,66 +210,196 @@ export default {
       duration: 1.5,
       delay: 1,
       y: 0,
-      ease: 'power2.out'
+      ease: 'circ.in'
     })
     gsap.to('.wrapper .row100 .col label', {
       opacity: 1,
       duration: 1.5,
       delay: 1.2,
       y: 0,
-      ease: 'power2.out'
+      ease: 'circ.in'
     })
 
-    // gsap.to('#button', {
-    //   opacity: 1,
-    //   duration: 1.5,
-    //   delay: 0.6,
-    //   y: 0,
-    //   ease: 'power2.out'
-    // })
-
-    // document.querySelector('#button')
-    //   .addEventListener('click', (e) => {
-    //     e.preventDefault()
-    //     gsap.to('#app', {
-    //       opacity: 0
-    //     })
-    //     gsap.to(camera.position, {
-    //       z: 25,
-    //       ease: 'power1.inOut',
-    //       duration: 2
-    //     })
-    //     gsap.to(camera.rotation, {
-    //       x: 1.57,
-    //       ease: 'power1.inOut',
-    //       duration: 2
-    //     })
-    //     gsap.to(camera.position, {
-    //       y: 1000,
-    //       ease: 'power1.in',
-    //       duration: 1,
-    //       delay: 1.5,
-    //       onComplete: () => {
-    //         this.$router.push('/work')
-    //       }
-    //     })
-    //   })
+    gsap.to('.sendBtn', {
+      opacity: 1,
+      duration: 1.5,
+      delay: 1.3,
+      // y: 0,
+      ease: 'circ.in'
+    })
 
     addEventListener('resize', () => {
       camera.aspect = innerWidth / innerHeight
       camera.updateProjectionMatrix()
       renderer.setSize(innerWidth, innerHeight)
     })
+
+    document.getElementById('test')
+      .addEventListener('click', () => {
+        // const el = document.createElement('div')
+        // el.classList.add('toast-container', 'toast-content')
+        // el.textContent = 'Success'
+        // const section = document.getElementById('section')
+        // section.appendChild(el)
+        // alert('wtf')
+        // gsap.to('.toast-container', {
+        //   autoAlpha: 1,
+        //   duration: 2,
+        //   ease: 'power1.out',
+        //   translateX: '-200px'
+        // })
+        // gsap.set(el, {
+        //   translateX: '200px',
+        //   autoAlpha: 0
+        // })
+        // const vw = window.innerWidth
+
+        const tl = gsap.timeline({
+          paused: true
+        })
+        tl.to('#toast', {
+          autoAlpha: 1,
+          translateX: vw / '50%',
+          ease: 'power1.in',
+          duration: 2
+        })
+        tl.to('#toast', {
+          autoAlpha: 0,
+          translateX: vw * 1,
+          ease: 'power1.out',
+          delay: 3,
+          duration: 2
+        })
+        tl.play()
+        // tl.addPause(3)
+        // tl.reverse()
+      })
+
+    // this.generateToast() {
+    // const vw = window.innerWidth
+    // const tl = gsap.timeline({
+    //   paused: true
+    // })
+    // tl.to('#toast', {
+    //   autoAlpha: 1,
+    //   translateX: vw / '50%',
+    //   ease: 'power1.in',
+    //   duration: 2
+    // })
+    // tl.to('#toast', {
+    //   autoAlpha: 0,
+    //   translateX: vw * 1,
+    //   ease: 'power1.out',
+    //   delay: 3,
+    //   duration: 2
+    // })
+    // tl.play()
+    // }
   },
   methods: {
+    // initToast () {
+    //   this.toast = document.querySelector('.toast')
+    //   this.progress = document.querySelector('.progress')
+    //   // const timer1,
+    //   // const timer2,
+
+    //   this.toast.classList.add('active')
+    //   this.progress.classList.add('active')
+    //   this.timer1 = setTimeout(() => {
+    //     this.toast.classList.remove('active')
+    //   }, 5000)
+    //   this.timer2 = setTimeout(() => {
+    //     this.progress.classList.remove('active')
+    //   }, 5300)
+    // },
+
+    //     generateToast ({
+    //       message,
+    //       background = '#00214d',
+    //       color = '#fffffe',
+    //       length = '3000ms'
+    //     }) {
+    //       this.toastContainer.insertAdjacentHTML('beforeend', `<p class="toast"
+    //     style="background-color: ${background};
+    //     color: ${color};
+    //     animation-duration: ${length}">
+    //     ${message}
+    //   </p>`)
+    //       this.toast = this.toastContainer.lastElementChild
+    //       this.toast.addEventListener('animationend', () => this.toast.remove())
+    //     },
+
+    //     initToast () {
+    //       document.body.insertAdjacentHTML('afterbegin', `<div class="toast-container"></div>
+    //   <style>
+
+    // .toast-container {
+    //   position: fixed;
+    //   top: 1rem;
+    //   right: 1.5rem;
+    //   display: grid;
+    //   justify-items: end;
+    //   gap: 1.5rem;
+    // }
+
+    // .toast {
+    //   font-size: 1.5rem;
+    //   font-weight: bold;
+    //   line-height: 1;
+    //   padding: 0.5em 1em;
+    //   background-color: lightblue;
+    //   animation: toastIt 3000ms cubic-bezier(0.785, 0.135, 0.15, 0.86) forwards;
+    // }
+
+    // @keyframes toastIt {
+    //   0%,
+    //   100% {
+    //     transform: translateY(-150%);
+    //     opacity: 0;
+    //   }
+    //   10%,
+    //   90% {
+    //     transform: translateY(0);
+    //     opacity: 1;
+    //   }
+    // }
+    //   </style>
+    //   `)
+    //       this.toastContainer = document.querySelector('.toast-container')
+    //     },
+
+    generateToast () {
+      const vw = window.innerWidth
+      const tl = gsap.timeline({
+        paused: true
+      })
+      tl.to('#toast', {
+        autoAlpha: 1,
+        translateX: vw / '50%',
+        ease: 'power1.in',
+        duration: 2
+      })
+      tl.to('#toast', {
+        autoAlpha: 0,
+        translateX: vw * 1,
+        ease: 'power1.out',
+        delay: 3,
+        duration: 2
+      })
+      tl.play()
+    },
+
+    goHome () {
+      this.$router.push('/')
+    },
+
     async sendMessage () {
       await addDoc(messageColRef, this.$data)
       await this.$refs.form.reset()
-      await this.initToast()
-      // this.$router.push('/')
-    },
-    initToast () {
-      alert('Dude')
+      await this.generateToast()
+      await setTimeout(() => {
+        this.goHome()
+      }, 5300)
     }
   }
 }
@@ -338,6 +481,7 @@ export default {
     margin-bottom: 20px;
     opacity: 0;
     transform: translateY(30px);
+    will-change: transform;
   }
 
   .wrapper .row100 {
@@ -362,6 +506,7 @@ export default {
     text-transform: uppercase;
     opacity: 0;
     transform: translateY(30px);
+    will-change: transform;
   }
 
   .wrapper .row100 .col .inputBox {
@@ -429,18 +574,37 @@ export default {
     border-radius: 24px;
     letter-spacing: .1em;
     transition:  all .3s ease;
+    opacity: 0;
+    /* transform: translateY(30px);
+    will-change: transform; */
   }
 
   .wrapper .row100 .col input[type="submit"]:hover {
     color: #fff;
     background: #88e614;
+    transform:  rotateX(3px);
+    will-change: transform;
+  }
+  /* .sendBtn:hover {
+    color: #fff;
+    background: #88e614;
     transform:  translateX(3px);
   }
+  .sendBtn {
+    opacity: 0;
+    transform: translateY(30px);
+  } */
 
-  @media screen and (min-width: 320px) and (max-width: 468px) {
+  @media screen and (min-width: 320px) and (max-width: 468px) and (orientation: portrait) {
+    canvas {
+      overflow: hidden;
+      overflow-x: hidden;
+    }
     section {
       margin-top: 50px;
-      overflow-y: scroll !important;
+      /* overflow-y: hidden !important; */
+      overflow-x: hidden !important;
+      overflow-y: hidden !important
     }
     section::before {
       transform: translate(-200px, -180px);
@@ -511,74 +675,98 @@ export default {
     }
   }
 
-  .toast {
-    position:absolute;
-    top:25px;
-    right:30px;
-    border-radius:5px;
+  /* .toast-container {
+    width: 100px;
+    height: 50px;
+    background: red;
+    visibility: visible;
+    position: absolute;
+    top: 1rem;
+    right: -100.5rem;
+    display: grid;
+    justify-items: end;
+    gap: 1.5rem;
+    opacity: 0;
+    transform: translateY(-150%);
+  } */
+
+  /* .toast-content {
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1;
+    padding: 0.5em 1em;
+    background-color: lightblue;
+  } */
+
+  /* .toast {
+    position: absolute;
+    top: 25px;
+    right: 30px;
+    border-radius: 5px;
     background: #fff;
-    padding:20px 35px 20px 25px;
-    box-shadow:0 5px 10px rgba(0,0,0,0.1);
-    border-right:6px solid #6af440;
-    overflow:hidden;
-    transform:translateX(calc(100% + 30px));
+    padding: 20px 35px 20px 25px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    border-right: 6px solid #6af440;
+    overflow-y: hidden;
+    overflow-y: auto;
+    transform: translateX(calc(100% + 30px));
     transition: all 0.5s cubic-bezier(0.68,-0.55,0.265,1.35);
   }
   .toast.active {
-    transform:translateX(0%);
+    transform: translateX(0%);
   }
   .toast .toast-content {
-    display:flex;
+    display: flex;
     align-items: center;
   }
-  .toast-content .check{
-    display:flex;
+  .toast-content .check {
+    display: flex;
     align-items: center;
     justify-content: center;
-    height:40px;
-    width:40px;
+    height: 40px;
+    width: 40px;
     background-color: #6af440;
     color:#fff;
-    font-size:20px;
-    border-radius:10%;
+    font-size: 20px;
+    border-radius: 10%;
   }
-  .toast-content .message{
+  .toast-content .message {
     display:flex;
     flex-direction: column;
-    margin:0 20px;
+    margin: 0 20px;
   }
-  .message .text{
-    font-size:20px;
-    font-weight:400;
+  .message .text {
+    font-size: 20px;
+    font-weight: 400;
     color:#666;
   }
-  .message .text.text-1{
-    font-weight:600;
+  .message .text.text-1 {
+    font-weight: 600;
     color:#333;
   }
-  .toast .progress{
-    position:absolute;
-    bottom:0;
-    right:0;
-    height:4px;
-    width:100%;
+  .toast .progress {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 4px;
+    width: 100%;
     background: #ddd;
   }
-  .toast .progress:before{
-    content:'';
-    position:absolute;
-    bottom:0;
-    left:0;
-    height:100%;
-    width:100%;
+  .toast .progress:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
     background: #6af440;
   }
-  .progress.active:before{
-    animation:progress 5s linear forwards;
+  .progress.active:before {
+    animation: progress 5s linear forwards;
   }
   @keyframes progress{
-    100%{
-        left:100%;
+    100% {
+        left: 100%;
     }
-  }
+  } */
 </style>
