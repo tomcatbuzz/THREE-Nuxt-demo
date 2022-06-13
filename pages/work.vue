@@ -26,6 +26,7 @@ import laptopImg from '~/assets/laptop.jpg'
 // import lightsImg from '~/assets/lights.jpeg'
 export default {
   name: 'WorkPage',
+  layout: 'default',
   data () {
     return {
       projects: [

@@ -11,9 +11,6 @@
         </p>
         <button id="button">
           View Work
-          <!-- <NuxtLink to="/work">
-            View Work
-          </NuxtLink> -->
         </button>
       </div>
     </div>
@@ -30,7 +27,6 @@ import image from '~/assets/disc.png'
 export default {
   name: 'IndexPage',
   layout: 'default',
-  // transition: 'home',
   mounted () {
     // const gui = new dat.GUI()
     const world = {
@@ -363,7 +359,7 @@ button {
   border-color: rgb(157, 151, 151);
   border-radius: 0.25em;
   opacity: 0;
-  will-change: tranform;
+  will-change: transform;
   transform: translateY(30px);
   cursor: pointer;
 }
@@ -372,14 +368,6 @@ button:hover {
   background-color: white;
   color: rgb(157, 151, 151);
 }
-
-/* .home-enter-active, .home-leave-active {
-  transition: opacity 1s;
-}
-
-.home-enter, .home-leave-active {
-  opacity: 0;
-} */
 
 @media screen and (max-width: 480px) and (orientation: portrait) {
   p {

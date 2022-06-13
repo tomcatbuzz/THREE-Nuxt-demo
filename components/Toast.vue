@@ -9,7 +9,6 @@
         <MaterialIconThumbUp class="thumbs" />
       </div>
     </div>
-    <div class="progress" />
   </div>
 </template>
 
