@@ -6,6 +6,7 @@ module.exports = {
   },
   parserOptions: {
     parser: '@babel/eslint-parser',
+    sourceType: 'module',
     requireConfigFile: false
   },
   extends: [
@@ -16,6 +17,8 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
-    'vue/multi-word-component-names': 'off'
+    'vue/multi-word-component-names': 'off',
+    'vue/valid-attribute-name': 'off',
+    'vue/valid-model-definition': 'off'
   }
 }

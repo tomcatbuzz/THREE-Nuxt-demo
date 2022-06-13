@@ -13,9 +13,6 @@
   </div>
 </template>
 
-<script>
-</script>
-
 <style scoped>
 .toast-container {
     position: absolute;
@@ -24,6 +21,7 @@
     justify-items: end;
     gap: 1.5rem;
     will-change: transform;
+    z-index: 2000;
   }
 
   .toast-content {
