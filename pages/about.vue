@@ -18,6 +18,12 @@
 <script>
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import pX from '~/assets/px.png'
+import pY from '~/assets/py.png'
+import pZ from '~/assets/pz.png'
+import nX from '~/assets/nx.png'
+import nY from '~/assets/ny.png'
+import nZ from '~/assets/nz.png'
 export default {
   name: 'About',
   layout: 'default',
@@ -51,8 +57,11 @@ export default {
     light.position.set(0, -1, 1)
     scene.add(light)
 
-    const boxGeometry = new THREE.BoxGeometry(10, 10, 10)
-    const material = new THREE.MeshBasicMaterial({ color: 0x00FF00 })
+    const loader = new THREE.CubeTextureLoader()
+    const textureCube = loader.load([pX, pY, pZ, nX, nY, nZ])
+
+    const boxGeometry = new THREE.BoxGeometry(30, 30, 30)
+    const material = new THREE.MeshBasicMaterial({ color: 0xEEEEEE, envMap: textureCube })
     const mesh = new THREE.Mesh(boxGeometry, material)
     scene.add(mesh)
 
