@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div data-color="rgb(0, 0, 0)" class="wrapper">
     <h1>
       My Work
     </h1>

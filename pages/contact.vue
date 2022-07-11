@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div data-color="#2196f3">
     <section id="section">
       <form ref="form" class="wrapper" autocomplete="off" @submit.prevent="sendMessage">
         <h2>
@@ -71,6 +71,7 @@ export default {
   components: {
     Toast
   },
+  layout: 'default',
   data () {
     return {
       contactFirstName: null,
@@ -87,21 +88,21 @@ export default {
       translateX: vw * 1
     })
     // CURRENT comment for TEST blur
-    // gsap.to('section', {
-    //   opacity: 1,
-    //   duration: 1.5,
-    //   ease: 'power2.out'
-    // })
-    gsap.to('.wrapper h2', {
+    gsap.to('section', {
       opacity: 1,
       duration: 1.5,
+      ease: 'power2.in'
+    })
+    gsap.to('.wrapper h2', {
+      opacity: 1,
+      duration: 1.6,
       delay: 1,
       y: 0,
       ease: 'circ.in'
     })
     gsap.to('.wrapper .row100 .col label', {
       opacity: 1,
-      duration: 1.5,
+      duration: 1.6,
       delay: 1.2,
       y: 0,
       ease: 'circ.in'
@@ -109,7 +110,7 @@ export default {
 
     gsap.to('.sendBtn', {
       opacity: 1,
-      duration: 1.5,
+      duration: 1.6,
       delay: 1.3,
       ease: 'circ.in'
     })
@@ -187,7 +188,7 @@ export default {
   padding: 20px;
   width: 100%;
   /* background: #001923; */
-  /* opacity: 0; */
+  opacity: 0;
   }
 
   section:before {
@@ -351,7 +352,7 @@ export default {
   .wrapper .row100 .col input[type="submit"]:hover {
     color: #fff;
     background: #88e614;
-    transform:  translateX(3px);
+    transform:  translateX(5px);
     will-change: transform;
   }
   /* .sendBtn:hover {

@@ -2,7 +2,7 @@
   <div class="toast-container">
     <div class="toast-content">
       <div class="message">
-        <span class="text text-1">Success</span>
+        <span class="text text-1">Success.</span>
         <span class="text text-2">Your Message Was Sent!</span>
       </div>
       <div class="icon">

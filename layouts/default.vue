@@ -113,7 +113,9 @@
     </div>
     <main>
       <div class="container">
-        <Nuxt />
+        <myTransition>
+          <Nuxt />
+        </myTransition>
       </div>
     </main>
     <footer>
@@ -131,10 +133,12 @@
     </footer>
   </div>
 </template>
-
 <script>
 // eslint-disable-next-line import/no-named-as-default
 import gsap from 'gsap'
+// import custom from '~/components/transitions'
+import myTransition from '~/components/myTransition.vue'
+// import Transition from '~/plugins/Transition.js'
 // import Tooltip from '~/components/Tooltip'
 // import twitterImg from '~/assets/twitter.png'
 // import githubImg from '~/assets/github.png'
@@ -142,8 +146,52 @@ import gsap from 'gsap'
 // import codepenImg from '~/assets/codepen.png'
 export default {
   name: 'DefaultLayout',
-  // components: {
-  //   Tooltip
+  components: {
+    myTransition
+  },
+  // transition: custom,
+  // transition (to, from) {
+  //   if (!from) {
+  //     return from.query.fade
+  //   }
+  //   return to.query.fade ? transitions.fade : transitions.bounce
+  // },
+  // transition: {
+  //   // mode: 'out-in',
+  //   css: 'false',
+  //   // el: '#page',
+  //   beforeEnter (el) {
+  //     gsap.set(el, {
+  //       y: window.innerWidth * 1.5,
+  //       scale: 0.8,
+  //       transformOrigin: '50%, 50%'
+  //     })
+  //     console.log('before')
+  //   },
+  //   enter (el, done) {
+  //     const tl = gsap.timeline({
+  //       onComplete: done
+  //     })
+  //     tl.to(el, {
+  //       duration: 0.5,
+  //       y: 0,
+  //       ease: 'power4.out'
+  //     })
+  //     tl.to(el, {
+  //       duration: 1,
+  //       scale: 1,
+  //       ease: 'power4.out'
+  //     })
+  //     console.log('enter')
+  //   },
+  //   leave (el, done) {
+  //     gsap.to(el, {
+  //       duration: 1,
+  //       y: window.innerHeight * -1.5,
+  //       ease: 'power4.out',
+  //       onComplete: done
+  //     })
+  //   }
   // },
   mounted () {
     document.querySelector('#menu').addEventListener('click', () => {
@@ -262,6 +310,60 @@ export default {
         .to('.nav', {
           autoAlpha: 0
         })
+    }
+  },
+  // transition: {
+  //   mode: 'out-in',
+  //   css: false,
+  //   onEnter (done) {
+  //     this.$transition.show({
+  //       color: this.page.element.getAttribute('data-color')
+  //     })
+  //     done()
+  //   },
+  //   onLeave (done) {
+  //     this.$transition.hide()
+  //     done()
+  //   }
+  // },
+  // created () {
+  //   this.$transition = new Transition()
+  //   console.log(this.$transition, 'wht the fook')
+  // },
+  methods: {
+    name: 'page',
+    mode: 'out-in',
+    template: '#page',
+    beforeEnter (el) {
+      gsap.set(el.children, {
+        y: window.innerWidth * 1.5,
+        scale: 0.8,
+        transformOrigin: '50%, 50%'
+      })
+    },
+    enter (el, done) {
+      alert('enter')
+      const tl = gsap.timeline({
+        onComplete: done
+      })
+      tl.to(el.children, {
+        duration: 0.5,
+        y: 0,
+        ease: 'power4.out'
+      })
+      tl.to(el.children, {
+        duration: 1,
+        scale: 1,
+        ease: 'power4.out'
+      })
+    },
+    leave (el, done) {
+      gsap.to(el.children, {
+        duration: 1,
+        y: window.innerHeight * -1.5,
+        ease: 'power4.out',
+        onComplete: done
+      })
     }
   }
 }
@@ -419,36 +521,6 @@ footer .copy {
   width: 2em;
 }
 
-// .logos .tooltip {
-//   visibility: hidden;
-//   width: 120px;
-//   background-color: black;
-//   color: #fff;
-//   text-align: center;
-//   border-radius: 6px;
-//   padding: 5px 0;
-//   position: absolute;
-//   z-index: 1000;
-//   bottom: 150%;
-//   left: 50%;
-//   margin-left: -60px;
-// }
-
-// .logos .tooltip::after {
-//   content: "";
-//   position: absolute;
-//   top: 100%;
-//   left: 50%;
-//   margin-left: -5px;
-//   border-width: 5px;
-//   border-style: solid;
-//   border-color: black transparent transparent transparent;
-// }
-
-// .logos .tooltip:hover {
-//   visibility: visible;
-// }
-
 .twitter {
   padding: 0.15em;
   background: white;
@@ -479,28 +551,33 @@ footer .copy {
   color: #0e76A8;
 }
 
-.page-enter-active,
-.page-leave-active {
-  transition: opacity 800ms, transform 800ms ease-in;
-}
+// .page-enter-active {
+//   transition: opacity 0.25s ease-out;
+// }
 
-.page-enter {
-  opacity: 0;
-  // transform: translate3d(0, 20px, 0);
-}
+// .page-leave-active {
+//   transition: opacity 0.25s ease-in;
+// }
 
-.page-enter-to {
-  opacity: 1;
-  // transform: translate3d(0, 0, 0);
-}
+// .page-enter,
+// .page-leave-active {
+//   opacity: 0;
+//   // transform: translate3d(0, 20px, 0);
+//   // transform: scale(0);
+// }
 
-.page-leave {
-  opacity: 1;
-}
+// .page-enter-from {
+//   opacity: 1;
+//   // transform: translate3d(0, 0, 0);
+// }
 
-.page-leave-to {
-  opacity: 0;
-}
+// .page-leave {
+//   opacity: 1;
+// }
+
+// .page-leave-to {
+//   opacity: 0;
+// }
 
 .close {
   position: fixed;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div data-color="rgb(157, 151, 151)">
     <canvas ref="canvas" />
     <div id="app">
       <div class="headline">
@@ -23,10 +23,12 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 // eslint-disable-next-line import/no-named-as-default
 import gsap from 'gsap'
 import image from '~/assets/disc.png'
+// import custom from '~/components/transitions'
 // import * as dat from 'dat.gui'
 export default {
   name: 'IndexPage',
   layout: 'default',
+  // transition: custom,
   mounted () {
     // const gui = new dat.GUI()
     const world = {
@@ -249,23 +251,28 @@ export default {
       // console.log(mouse)
     })
 
+    // tl = gsap.timeline({
+    //   duration: 1.5,
+    //   delay: 1
+    // })
     gsap.to('#name', {
       opacity: 1,
       duration: 1.5,
+      delay: 0.8,
       y: 0,
       ease: 'power2.out'
     })
     gsap.to('#headline', {
       opacity: 1,
       duration: 1.5,
-      delay: 0.3,
+      delay: 0.9,
       y: 0,
       ease: 'power2.out'
     })
     gsap.to('#button', {
       opacity: 1,
-      duration: 1.5,
-      delay: 0.6,
+      duration: 1,
+      delay: 1,
       y: 0,
       ease: 'power2.out'
     })
@@ -312,7 +319,6 @@ canvas {
   outline: none;
   cursor: pointer;
 }
-
 .headline {
   position: absolute;
   top: 50%;

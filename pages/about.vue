@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div data-color="rgb(57, 237, 57)">
     <canvas ref="canvas2" />
     <div class="wrapper">
       <h1>
@@ -24,12 +24,15 @@ import pZ from '~/assets/pz.png'
 import nX from '~/assets/nx.png'
 import nY from '~/assets/ny.png'
 import nZ from '~/assets/nz.png'
+// import custom from '~/components/transitions'
 export default {
   name: 'About',
   layout: 'default',
+  // transition: custom,
   mounted () {
     // const raycaster = new THREE.Raycaster()
     const scene = new THREE.Scene()
+    const scene2 = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(
       70,
       innerWidth / innerHeight,
@@ -49,31 +52,95 @@ export default {
     // eslint-disable-next-line no-new
     new OrbitControls(camera, renderer.domElement)
 
-    const backlight = new THREE.DirectionalLight(0xFFFFFF, 1)
-    backlight.position.set(0, 1, -1)
-    scene.add(backlight)
+    // const backlight = new THREE.DirectionalLight(0xFFFFFF, 1)
+    // backlight.position.set(0, 1, -1)
+    // scene.add(backlight)
 
-    const light = new THREE.DirectionalLight(0xFFFFFF, 1)
-    light.position.set(0, -1, 1)
-    scene.add(light)
+    // const light = new THREE.DirectionalLight(0xFFFFFF, 1)
+    // light.position.set(0, -1, 1)
+    // scene.add(light)
 
-    const loader = new THREE.CubeTextureLoader()
-    const textureCube = loader.load([pX, pY, pZ, nX, nY, nZ])
+    const loader = new THREE.TextureLoader()
+    // const textureCube = loader.load([pX, pY, pZ, nX, nY, nZ])
+    const textureCube = loader.load(pX)
+    const textureChange = loader.load(pZ)
+    const texturePy = loader.load(pY)
+    const textureNx = loader.load(nX)
+    const textureNy = loader.load(nY)
+    const textureNz = loader.load(nZ)
 
     const boxGeometry = new THREE.BoxGeometry(30, 30, 30)
-    const material = new THREE.MeshBasicMaterial({ color: 0xEEEEEE, envMap: textureCube })
-    const mesh = new THREE.Mesh(boxGeometry, material)
+    // const material = new THREE.MeshBasicMaterial({ color: 0xEEEEEE, envMap: textureCube })
+    // const material = new THREE.MeshBasicMaterial({ map: textureCube })
+    const materials = [
+      new THREE.MeshBasicMaterial({ map: textureCube }),
+      new THREE.MeshBasicMaterial({ map: textureChange }),
+      new THREE.MeshBasicMaterial({ map: texturePy }),
+      new THREE.MeshBasicMaterial({ map: textureNx }),
+      new THREE.MeshBasicMaterial({ map: textureNy }),
+      new THREE.MeshBasicMaterial({ map: textureNz })
+    ]
+    // let materialToShow = 0
+    const mesh = new THREE.Mesh(boxGeometry, materials)
     scene.add(mesh)
+
+    const material = new THREE.ShaderMaterial({
+      side: THREE.DoubleSide,
+      vertexShader: `uniform float time;
+      varying vec2 vUv;
+      varying vec3 vPosition;
+      uniform vec2 pixels;
+      float PI = 3.141592653589793238;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+      }`,
+      fragmentShader: `uniform float time;
+      uniform float progress;
+      uniform sampler2D texture1;
+      uniform vec4 resolution;
+      varying vec2 vUv;
+      varying vec3 vPosition;
+      float PI = 3.141592653589793238;
+        void main(){
+          //vec2 newUV = (vUv - vec2(0.5))*resolution.zw + vec2(0.5);
+          gl_FragColor = vec4(vUv,0.0,1.);
+      }`
+    })
+    const geometry = new THREE.PlaneGeometry(100, 100, 100, 100)
+    const plane = new THREE.Mesh(geometry, material)
+    scene2.add(plane)
 
     const mouse = {
       x: undefined,
       y: undefined
     }
 
+    // this.$refs.canvas2
+    //   .addEventListener('click', (e) => {
+    //     // e.preventDefault()
+    //     // TEST this
+    //     // for (let i = 0; i < array.length; i += 3) {
+    //     materialToShow++
+    //     if (materialToShow >= materials.length) {
+    //       // materialToShow = 0
+    //       mesh.material = materials[materialToShow]
+    //       // mesh.material.needsUpdate = true
+    //     }
+
+    //     // for (materialToShow = 0; materialToShow < materials.length; materialToShow + 1) {
+    //     //   mesh.material = materials[materialToShow]
+    //     // }
+    //     console.log(materials, 'material')
+    //     // gsap.to('#app', {
+    //     //   opacity: 0
+    //     // })
+    //   })
+
     // let frame = 0
     function animate () {
       requestAnimationFrame(animate)
-      renderer.render(scene, camera)
+      renderer.render(scene2, camera)
       // frame += 0.01
       // raycaster for point hover
       // raycaster.setFromCamera(mouse, camera)
@@ -118,7 +185,8 @@ export default {
       //     }
       //   })
       // }
-      mesh.rotateX(0.005)
+      plane.rotation.x += 0.005
+      mesh.rotation.y += 0.01
     }
 
     animate()
@@ -192,7 +260,7 @@ export default {
     width: 100px;
     position: absolute;
     top: 20px;
-    color: green;
+    color: rgb(57, 237, 57);
     border-radius: 25px;
     border: 2px solid red;
   }
