@@ -258,7 +258,7 @@ export default {
     gsap.to('#name', {
       opacity: 1,
       duration: 1.5,
-      delay: 0.8,
+      delay: 0.5,
       y: 0,
       ease: 'power2.out'
     })

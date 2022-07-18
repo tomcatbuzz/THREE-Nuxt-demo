@@ -26,12 +26,11 @@ export default {
 .tooltip-container {
   position: relative;
   display: inline-block;
-  margin:100px;
+  margin: 100px;
 }
 
 .tooltip-container:hover .tooltip{
   opacity: 1;
-
 }
 
 .tooltip {
@@ -63,6 +62,5 @@ export default {
   border-width: 5px;
   border-style: solid;
   border-color: #000000 transparent transparent transparent;
-
 }
 </style>

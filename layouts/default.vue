@@ -111,6 +111,13 @@
         </symbol>
       </svg>
     </div>
+    <div class="page-transition">
+      <div class="page-transition__red" />
+      <div class="page-transition__black" />
+      <div class="transition__logo">
+        LOGO
+      </div>
+    </div>
     <main>
       <div class="container">
         <myTransition>
@@ -136,9 +143,7 @@
 <script>
 // eslint-disable-next-line import/no-named-as-default
 import gsap from 'gsap'
-// import custom from '~/components/transitions'
 import myTransition from '~/components/myTransition.vue'
-// import Transition from '~/plugins/Transition.js'
 // import Tooltip from '~/components/Tooltip'
 // import twitterImg from '~/assets/twitter.png'
 // import githubImg from '~/assets/github.png'
@@ -149,50 +154,6 @@ export default {
   components: {
     myTransition
   },
-  // transition: custom,
-  // transition (to, from) {
-  //   if (!from) {
-  //     return from.query.fade
-  //   }
-  //   return to.query.fade ? transitions.fade : transitions.bounce
-  // },
-  // transition: {
-  //   // mode: 'out-in',
-  //   css: 'false',
-  //   // el: '#page',
-  //   beforeEnter (el) {
-  //     gsap.set(el, {
-  //       y: window.innerWidth * 1.5,
-  //       scale: 0.8,
-  //       transformOrigin: '50%, 50%'
-  //     })
-  //     console.log('before')
-  //   },
-  //   enter (el, done) {
-  //     const tl = gsap.timeline({
-  //       onComplete: done
-  //     })
-  //     tl.to(el, {
-  //       duration: 0.5,
-  //       y: 0,
-  //       ease: 'power4.out'
-  //     })
-  //     tl.to(el, {
-  //       duration: 1,
-  //       scale: 1,
-  //       ease: 'power4.out'
-  //     })
-  //     console.log('enter')
-  //   },
-  //   leave (el, done) {
-  //     gsap.to(el, {
-  //       duration: 1,
-  //       y: window.innerHeight * -1.5,
-  //       ease: 'power4.out',
-  //       onComplete: done
-  //     })
-  //   }
-  // },
   mounted () {
     document.querySelector('#menu').addEventListener('click', () => {
       show()
@@ -311,60 +272,6 @@ export default {
           autoAlpha: 0
         })
     }
-  },
-  // transition: {
-  //   mode: 'out-in',
-  //   css: false,
-  //   onEnter (done) {
-  //     this.$transition.show({
-  //       color: this.page.element.getAttribute('data-color')
-  //     })
-  //     done()
-  //   },
-  //   onLeave (done) {
-  //     this.$transition.hide()
-  //     done()
-  //   }
-  // },
-  // created () {
-  //   this.$transition = new Transition()
-  //   console.log(this.$transition, 'wht the fook')
-  // },
-  methods: {
-    name: 'page',
-    mode: 'out-in',
-    template: '#page',
-    beforeEnter (el) {
-      gsap.set(el.children, {
-        y: window.innerWidth * 1.5,
-        scale: 0.8,
-        transformOrigin: '50%, 50%'
-      })
-    },
-    enter (el, done) {
-      alert('enter')
-      const tl = gsap.timeline({
-        onComplete: done
-      })
-      tl.to(el.children, {
-        duration: 0.5,
-        y: 0,
-        ease: 'power4.out'
-      })
-      tl.to(el.children, {
-        duration: 1,
-        scale: 1,
-        ease: 'power4.out'
-      })
-    },
-    leave (el, done) {
-      gsap.to(el.children, {
-        duration: 1,
-        y: window.innerHeight * -1.5,
-        ease: 'power4.out',
-        onComplete: done
-      })
-    }
   }
 }
 </script>
@@ -376,6 +283,38 @@ export default {
   font-family: "Poppins";
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
+}
+
+// Page transition div test
+.page-transition__black {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  background: #000;
+}
+
+.page-transition__red {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  background: red;
+}
+
+.transition__logo {
+  text-transform: uppercase;
+  font-family: sans-serif;
+  font-size: 60px;
+  position: absolute;
+  z-index: 1;
+  color: #fff;
+  font-weight: bold;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%,-50%);
 }
 
 header {
