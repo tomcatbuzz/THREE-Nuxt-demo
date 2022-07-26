@@ -1,6 +1,6 @@
 <template id="page">
   <div>
-    <header>
+    <header id="header">
       <h1 id="title">
         <MaterialIconApps />
         <NuxtLink to="/">
@@ -125,7 +125,7 @@
         </myTransition>
       </div>
     </main>
-    <footer>
+    <footer id="footer">
       <span class="copy">&copy; {{ new Date().getFullYear() }}</span>
       <div class="logos">
         <a title="Twitter" href="https://twitter.com/tomcatbuzz" rel="noopener noreferrer" target="_blank"><MaterialIconTwitter class="twitter" /></a>

@@ -257,21 +257,21 @@ export default {
     // })
     gsap.to('#name', {
       opacity: 1,
-      duration: 1.5,
+      duration: 3.5,
       delay: 0.5,
       y: 0,
       ease: 'power2.out'
     })
     gsap.to('#headline', {
       opacity: 1,
-      duration: 1.5,
+      duration: 3.5,
       delay: 0.9,
       y: 0,
       ease: 'power2.out'
     })
     gsap.to('#button', {
       opacity: 1,
-      duration: 1,
+      duration: 1.5,
       delay: 1,
       y: 0,
       ease: 'power2.out'
