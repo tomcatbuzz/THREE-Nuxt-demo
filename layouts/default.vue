@@ -111,13 +111,13 @@
         </symbol>
       </svg>
     </div>
-    <div class="page-transition">
+    <!-- <div class="page-transition">
       <div class="page-transition__red" />
       <div class="page-transition__black" />
       <div class="transition__logo">
         LOGO
       </div>
-    </div>
+    </div> -->
     <main>
       <div class="container">
         <myTransition>
@@ -286,36 +286,36 @@ export default {
 }
 
 // Page transition div test
-.page-transition__black {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100vh;
-  width: 100vw;
-  background: #000;
-}
+// .page-transition__black {
+//   position: absolute;
+//   left: 0;
+//   top: 0;
+//   height: 100vh;
+//   width: 100vw;
+//   background: #000;
+// }
 
-.page-transition__red {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100vh;
-  width: 100vw;
-  background: red;
-}
+// .page-transition__red {
+//   position: absolute;
+//   left: 0;
+//   top: 0;
+//   height: 100vh;
+//   width: 100vw;
+//   background: red;
+// }
 
-.transition__logo {
-  text-transform: uppercase;
-  font-family: sans-serif;
-  font-size: 60px;
-  position: absolute;
-  z-index: 1;
-  color: #fff;
-  font-weight: bold;
-  top: 50vh;
-  left: 50vw;
-  transform: translate(-50%,-50%);
-}
+// .transition__logo {
+//   text-transform: uppercase;
+//   font-family: sans-serif;
+//   font-size: 60px;
+//   position: absolute;
+//   z-index: 1;
+//   color: #fff;
+//   font-weight: bold;
+//   top: 50vh;
+//   left: 50vw;
+//   transform: translate(-50%,-50%);
+// }
 
 header {
   display: flex;
