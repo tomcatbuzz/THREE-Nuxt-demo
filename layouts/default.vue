@@ -7,7 +7,7 @@
           Tomcatbuzz
         </NuxtLink>
       </h1>
-      <nav>
+      <nav class="roll">
         <ul>
           <li>
             <NuxtLink to="/">
@@ -111,13 +111,6 @@
         </symbol>
       </svg>
     </div>
-    <!-- <div class="page-transition">
-      <div class="page-transition__red" />
-      <div class="page-transition__black" />
-      <div class="transition__logo">
-        LOGO
-      </div>
-    </div> -->
     <main>
       <div class="container">
         <myTransition>
@@ -285,46 +278,18 @@ export default {
   overflow: hidden;
 }
 
-// Page transition div test
-// .page-transition__black {
-//   position: absolute;
-//   left: 0;
-//   top: 0;
-//   height: 100vh;
-//   width: 100vw;
-//   background: #000;
-// }
-
-// .page-transition__red {
-//   position: absolute;
-//   left: 0;
-//   top: 0;
-//   height: 100vh;
-//   width: 100vw;
-//   background: red;
-// }
-
-// .transition__logo {
-//   text-transform: uppercase;
-//   font-family: sans-serif;
-//   font-size: 60px;
-//   position: absolute;
-//   z-index: 1;
-//   color: #fff;
-//   font-weight: bold;
-//   top: 50vh;
-//   left: 50vw;
-//   transform: translate(-50%,-50%);
-// }
-
 header {
+  position: absolute;
+  // top: 0;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   height: 2.5em;
   /* height: 3em; */
   width: 100%;
-  background-color: #119995;
+  // background-color: #119995;
+  background-color: transparent;
+  color: white;
 }
 
 #title {
@@ -333,7 +298,7 @@ header {
 }
 
 #title a {
-  color: black;
+  color: white;
   text-decoration: none;
   list-style: none;
 }
@@ -346,10 +311,11 @@ header li {
 li a {
   list-style: none;
   text-decoration: none;
-  color: black;
+  color: #fff;
   font-size: 1em;
   text-transform: uppercase;
   margin-right: 2em;
+  transition: 0.5s
 }
 
 ul {
@@ -364,12 +330,15 @@ button#menu {
   // padding: 0.2em;
   border: 0;
   // border-radius: 10px;
+  color: white;
+  transition: all 0.3s ease-in-out;
 }
 
 button#menu:hover {
   padding: 0.2em;
   border-radius: 5px;
   background-color: #88e614;
+  color: black;
 }
 
 /* .nuxt-link-exact-active:not(#title a) {
@@ -381,36 +350,43 @@ button#menu:hover {
   font-size: 1.2em;
 }
 
-li a {
-  background-image: linear-gradient(to right, #88e614, #88e614 50%, #000 50%);
-  background-size: 200% 100%;
-  background-position: -100%;
-  padding: 5px 0;
-  position: relative;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: all 0.3s ease-in-out;
+ul li {
+  transition: 0.5s;
+  padding: 5px;
 }
 
-li a:before {
+ul:hover li a {
+  transform: scale(1.5);
+  opacity: 0.2;
+  filter: blur(5px);
+}
+
+ul li a:hover {
+  transform: scale(2);
+  opacity: 1;
+  filter: blur(0);
+  text-decoration: none;
+  color:#fff;
+}
+
+ul li a:before {
   content: '';
-  background: #88e614;
-  display: block;
   position: absolute;
-  bottom: -3px;
+  top: 0;
   left: 0;
-  width: 0;
-  height: 3px;
-  transition: all 0.3s ease-in-out;
-}
-
-li a:hover {
-  background-position: 0;
-}
-
-li a:hover::before {
   width: 100%;
+  height: 100%;
+  background: #ff497c;
+  transition: 0.5s;
+  transform-origin: right;
+  transform: scaleX(0);
+  z-index: -1;
+}
+
+ul li a:hover:before {
+  transition: transform 0.5s;
+  transform-origin: left;
+  transform: scaleX(1);
 }
 
 .container {
@@ -427,7 +403,8 @@ footer {
   position: fixed;
   bottom: 0;
   display: flex;
-  background-color: #119995;
+  // background-color: #119995;
+  background-color: transparent;
   height: 3em;
   width: 100%;
 }
@@ -435,6 +412,7 @@ footer {
 footer .copy {
   font-size: 1.5rem;
   margin: 0.5em;
+  color: white;
 }
 
 .logos {

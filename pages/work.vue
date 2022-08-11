@@ -109,6 +109,7 @@ export default {
     text-transform: uppercase;
     opacity: 0;
     transform: translateY(30px);
+    margin-top: 1em;
   }
 
   .imagewrap {

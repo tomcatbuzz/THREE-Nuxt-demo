@@ -251,20 +251,16 @@ export default {
       // console.log(mouse)
     })
 
-    // tl = gsap.timeline({
-    //   duration: 1.5,
-    //   delay: 1
-    // })
     gsap.to('#name', {
       opacity: 1,
-      duration: 3.5,
-      delay: 0.5,
+      duration: 1.5,
+      // delay: 0.5,
       y: 0,
       ease: 'power2.out'
     })
     gsap.to('#headline', {
       opacity: 1,
-      duration: 3.5,
+      duration: 1.5,
       delay: 0.9,
       y: 0,
       ease: 'power2.out'
