@@ -290,6 +290,7 @@ header {
   // background-color: #119995;
   background-color: transparent;
   color: white;
+  z-index: 2;
 }
 
 #title {
