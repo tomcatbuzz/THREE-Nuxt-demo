@@ -2,9 +2,7 @@
   <transition
     :css="false"
     appear
-    @before-enter="beforeEnter"
     @enter="enter"
-    @after-enter="afterEnter"
     @leave="leave"
   >
     <slot />
@@ -12,6 +10,7 @@
 </template>
 
 <script>
+// these go in TEMPLATE if needed in METHODS @before-enter="beforeEnter" @after-enter="afterEnter"
 // eslint-disable-next-line import/no-named-as-default
 import gsap from 'gsap'
 

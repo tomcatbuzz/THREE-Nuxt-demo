@@ -19,7 +19,7 @@
 
 <script>
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 // eslint-disable-next-line import/no-named-as-default
 import gsap from 'gsap'
 import image from '~/assets/disc.png'

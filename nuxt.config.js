@@ -63,6 +63,12 @@ export default {
     transpile: [
       'gsap',
       'three'
-    ]
+    ],
+    extend (config) {
+      config.module.rules.push({
+        test: /\.(glsl|vs|fs|vert|frag)$/,
+        use: ['raw-loader', 'glslify-loader']
+      })
+    }
   }
 }

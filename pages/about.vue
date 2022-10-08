@@ -17,13 +17,15 @@
 
 <script>
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import pX from '~/assets/px.png'
 import pY from '~/assets/py.png'
 import pZ from '~/assets/pz.png'
 import nX from '~/assets/nx.png'
 import nY from '~/assets/ny.png'
 import nZ from '~/assets/nz.png'
+import fragment from '~/shaders/aboutFragment.glsl'
+import vertex from '~/shaders/aboutVertex.glsl'
 // import custom from '~/components/transitions'
 export default {
   name: 'About',
@@ -86,26 +88,8 @@ export default {
 
     const material = new THREE.ShaderMaterial({
       side: THREE.DoubleSide,
-      vertexShader: `uniform float time;
-      varying vec2 vUv;
-      varying vec3 vPosition;
-      uniform vec2 pixels;
-      float PI = 3.141592653589793238;
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-      }`,
-      fragmentShader: `uniform float time;
-      uniform float progress;
-      uniform sampler2D texture1;
-      uniform vec4 resolution;
-      varying vec2 vUv;
-      varying vec3 vPosition;
-      float PI = 3.141592653589793238;
-        void main(){
-          // vec2 newUV = (vUv - vec2(0.5))*resolution.zw + vec2(0.5);
-          gl_FragColor = vec4(vUv,0.0,1.);
-      }`
+      vertexShader: vertex,
+      fragmentShader: fragment
     })
     const geometry = new THREE.PlaneGeometry(100, 100, 100, 100)
     const plane = new THREE.Mesh(geometry, material)

@@ -1,5 +1,6 @@
 <template>
   <div data-color="#2196f3">
+    <canvas ref="canvas3" />
     <section id="section">
       <form ref="form" class="wrapper" autocomplete="off" @submit.prevent="sendMessage">
         <h2>
@@ -64,8 +65,12 @@
 // eslint-disable-next-line import/no-named-as-default
 import gsap from 'gsap'
 import { addDoc } from 'firebase/firestore'
-import Toast from '~/components/Toast.vue'
+import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import fragment from '~/shaders/aboutFragment.glsl'
+import vertex from '~/shaders/aboutVertex.glsl'
 import messageColRef from '~/plugins/firebase'
+import Toast from '~/components/Toast.vue'
 export default {
   name: 'ContactPage',
   components: {
@@ -82,12 +87,104 @@ export default {
     }
   },
   mounted () {
+    // const scene = new THREE.Scene()
+    const scene2 = new THREE.Scene()
+    const camera = new THREE.PerspectiveCamera(
+      45,
+      innerWidth / innerHeight,
+      0.1,
+      1000)
+    const renderer = new THREE.WebGLRenderer({
+      canvas: this.$refs.canvas3,
+      antialias: true
+    })
+
+    // camera.position.z = 50
+    camera.position.set(0, 0, 18)
+
+    renderer.setSize(innerWidth, innerHeight)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    // document.body.appendChild(renderer.domElement)
+
+    // eslint-disable-next-line no-new
+    new OrbitControls(camera, renderer.domElement)
+
+    // const backlight = new THREE.DirectionalLight(0xFFFFFF, 1)
+    // backlight.position.set(0, 1, -1)
+    // scene.add(backlight)
+
+    // const light = new THREE.DirectionalLight(0xFFFFFF, 1)
+    // light.position.set(0, -1, 1)
+    // scene.add(light)
+
+    const material = new THREE.ShaderMaterial({
+      // side: THREE.DoubleSide,
+      vertexShader: vertex,
+      fragmentShader: fragment,
+      wireframe: true
+    })
+    const geometry = new THREE.SphereBufferGeometry(4.3, 16, 16)
+    const plane = new THREE.Mesh(geometry, material)
+    scene2.add(plane)
+
+    // plane.position.set(-30.5, 8, 2)
+    plane.position.set(10, -4.3, -10)
+
+    const sphere2material = new THREE.ShaderMaterial({
+      // side: THREE.DoubleSide,
+      vertexShader: vertex,
+      fragmentShader: fragment,
+      wireframe: true
+    })
+    const sphere2geometry = new THREE.SphereBufferGeometry(5, 16, 16)
+    const sphere2 = new THREE.Mesh(sphere2geometry, sphere2material)
+    scene2.add(sphere2)
+
+    // sphere2.position.set(20, -10, -10)
+    sphere2.position.set(-10.2, 4.2, -10)
+
+    const mouse = {
+      x: undefined,
+      y: undefined
+    }
+
+    function animate () {
+      requestAnimationFrame(animate)
+      renderer.render(scene2, camera)
+      plane.rotation.y += 0.005
+      sphere2.rotation.x += 0.005
+
+      // mesh.rotation.y += 0.01
+    }
+
+    animate()
+
+    addEventListener('mousemove', (e) => {
+      mouse.x = (e.clientX / innerWidth) * 2 - 1
+      mouse.y = -(e.clientY / innerHeight) * 2 + 1
+      // console.log(mouse)
+    })
+
+    addEventListener('resize', () => {
+      camera.aspect = innerWidth / innerHeight
+      camera.updateProjectionMatrix()
+      renderer.setSize(innerWidth, innerHeight)
+    })
+
     const vw = window.innerWidth
     gsap.set('#toast', {
       autoAlpha: 0,
       translateX: vw * 1
     })
     // CURRENT comment for TEST blur
+    // gsap.set(plane.position, {
+    //   y: 500
+    // })
+    // gsap.to(plane.position, {
+    //   y: -4.3,
+    //   duration: 2.5,
+    //   ease: 'power2.in'
+    // })
     gsap.to('section', {
       opacity: 1,
       duration: 1.5,
@@ -176,6 +273,13 @@ export default {
 </script>
 
 <style scoped>
+  canvas {
+  display: block;
+  outline: none;
+  cursor: pointer;
+  z-index: -1;
+  }
+
   section {
   position: absolute;
   top: 50%;
@@ -191,7 +295,7 @@ export default {
   opacity: 0;
   }
 
-  section:before {
+  /* section:before {
     content: '';
     position: absolute;
     width: 400px;
@@ -199,9 +303,9 @@ export default {
     background: linear-gradient(#ffeb3b, #e91e63);
     border-radius: 50%;
     transform: translate(-420px, -180px);
-  }
+  } */
 
-  section:after {
+  /* section:after {
     content: '';
     position: absolute;
     width: 350px;
@@ -209,7 +313,7 @@ export default {
     background: linear-gradient(#2196f3, #83d8ff);
     border-radius: 50%;
     transform: translate(400px, 180px);
-  }
+  } */
 
   .wrapper {
     position: relative;
@@ -224,7 +328,8 @@ export default {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     overflow: hidden;
-    backdrop-filter: blur(25px);
+    backdrop-filter: blur(15px);
+    /* backdrop-filter: blur(25px); */
     height: 100%;
     /* opacity: 0;
     transform: translateY(30px); */
