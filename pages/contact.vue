@@ -67,8 +67,10 @@ import gsap from 'gsap'
 import { addDoc } from 'firebase/firestore'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import fragment from '~/shaders/aboutFragment.glsl'
-import vertex from '~/shaders/aboutVertex.glsl'
+import sphereFragment from '~/shaders/sphereFragment.glsl'
+import sphereVertex from '~/shaders/sphereVertex.glsl'
+import Cfragment from '~/shaders/contactFragment.glsl'
+import Cvertex from '~/shaders/contactVertex.glsl'
 import messageColRef from '~/plugins/firebase'
 import Toast from '~/components/Toast.vue'
 export default {
@@ -102,6 +104,8 @@ export default {
     // camera.position.z = 50
     camera.position.set(0, 0, 18)
 
+    const clock = new THREE.Clock()
+
     renderer.setSize(innerWidth, innerHeight)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     // document.body.appendChild(renderer.domElement)
@@ -119,8 +123,8 @@ export default {
 
     const material = new THREE.ShaderMaterial({
       // side: THREE.DoubleSide,
-      vertexShader: vertex,
-      fragmentShader: fragment,
+      vertexShader: sphereVertex,
+      fragmentShader: sphereFragment,
       wireframe: true
     })
     const geometry = new THREE.SphereBufferGeometry(4.3, 16, 16)
@@ -130,13 +134,35 @@ export default {
     // plane.position.set(-30.5, 8, 2)
     plane.position.set(10, -4.3, -10)
 
+    // const speed, density, strength, color, offset
+
     const sphere2material = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 1 },
+        uSpeed: { value: 0.5 },
+        uNoiseDensity: { value: 1 },
+        uNoiseStrength: { value: 1 },
+        uFreq: { value: 3 },
+        uAmp: { value: 6 },
+        uHue: { value: 0.5 },
+        uOffset: { value: 0.8 },
+        red: { value: 0 },
+        green: { value: 0 },
+        blue: { value: 0 },
+        // uAlpha: { value: 1.0 }
+        uAlpha: { value: 0.8 }
+      },
+      defines: {
+        PI: Math.PI
+      },
       // side: THREE.DoubleSide,
-      vertexShader: vertex,
-      fragmentShader: fragment,
-      wireframe: true
+      vertexShader: Cvertex,
+      fragmentShader: Cfragment,
+      // wireframe: true
+      transparent: true
     })
-    const sphere2geometry = new THREE.SphereBufferGeometry(5, 16, 16)
+    const sphere2geometry = new THREE.IcosahedronGeometry(5, 16, 16)
+    // const sphere2geometry = new THREE.IcosahedronGeometry(64)
     const sphere2 = new THREE.Mesh(sphere2geometry, sphere2material)
     scene2.add(sphere2)
 
@@ -152,7 +178,11 @@ export default {
       requestAnimationFrame(animate)
       renderer.render(scene2, camera)
       plane.rotation.y += 0.005
-      sphere2.rotation.x += 0.005
+      // sphere2.rotation.x += 0.005
+      sphere2material.uniforms.uTime.value = clock.getElapsedTime()
+      // scene2.children.forEach((sphere2) => {
+      //   sphere2material.uniforms.uTime.value = clock.getElapsedTime()
+      // })
 
       // mesh.rotation.y += 0.01
     }
@@ -165,10 +195,23 @@ export default {
       // console.log(mouse)
     })
 
-    addEventListener('resize', () => {
-      camera.aspect = innerWidth / innerHeight
+    const sizes = {
+      width: window.innerWidth,
+      height: window.innerHeight
+    }
+
+    window.addEventListener('resize', () => {
+      // Update sizes
+      sizes.width = window.innerWidth
+      sizes.height = window.innerHeight
+
+      // Update camera
+      camera.aspect = sizes.width / sizes.height
       camera.updateProjectionMatrix()
-      renderer.setSize(innerWidth, innerHeight)
+
+      // Update renderer
+      renderer.setSize(sizes.width, sizes.height)
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     })
 
     const vw = window.innerWidth
@@ -177,14 +220,22 @@ export default {
       translateX: vw * 1
     })
     // CURRENT comment for TEST blur
-    // gsap.set(plane.position, {
-    //   y: 500
-    // })
-    // gsap.to(plane.position, {
-    //   y: -4.3,
-    //   duration: 2.5,
-    //   ease: 'power2.in'
-    // })
+    gsap.set(sphere2.position, {
+      x: -300
+    })
+    gsap.to(sphere2.position, {
+      x: -10.2,
+      duration: 2.5,
+      ease: 'power2.inOut'
+    })
+    gsap.set(plane.position, {
+      x: 300
+    })
+    gsap.to(plane.position, {
+      x: 10,
+      duration: 2.5,
+      ease: 'power2.inOut'
+    })
     gsap.to('section', {
       opacity: 1,
       duration: 1.5,

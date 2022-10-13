@@ -273,32 +273,32 @@ export default {
       ease: 'power2.out'
     })
 
-    document.querySelector('#button')
-      .addEventListener('click', (e) => {
-        e.preventDefault()
-        gsap.to('#app', {
-          opacity: 0
-        })
-        gsap.to(camera.position, {
-          z: 25,
-          ease: 'power1.inOut',
-          duration: 2
-        })
-        gsap.to(camera.rotation, {
-          x: 1.57,
-          ease: 'power1.inOut',
-          duration: 2
-        })
-        gsap.to(camera.position, {
-          y: 1000,
-          ease: 'power1.in',
-          duration: 1,
-          delay: 1.5,
-          onComplete: () => {
-            this.$router.push('/work')
-          }
-        })
-      })
+    // document.querySelector('#button')
+    //   .addEventListener('click', (e) => {
+    //     e.preventDefault()
+    //     gsap.to('#app', {
+    //       opacity: 0
+    //     })
+    //     gsap.to(camera.position, {
+    //       z: 25,
+    //       ease: 'power1.inOut',
+    //       duration: 2
+    //     })
+    //     gsap.to(camera.rotation, {
+    //       x: 1.57,
+    //       ease: 'power1.inOut',
+    //       duration: 2
+    //     })
+    //     gsap.to(camera.position, {
+    //       y: 1000,
+    //       ease: 'power1.in',
+    //       duration: 1,
+    //       delay: 1.5,
+    //       onComplete: () => {
+    //         this.$router.push('/work')
+    //       }
+    //     })
+    //   })
 
     addEventListener('resize', () => {
       camera.aspect = innerWidth / innerHeight

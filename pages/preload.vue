@@ -3,21 +3,24 @@
     <canvas ref="canvas2" />
     <div class="wrapper">
       <h1>
-        About
+        Preload
       </h1>
       <div class="button--container">
-        <button class="about--btn" id='button'>
+        <button class="about--btn">
           Dude
         </button>
         <span class="title">Dude Button</span>
       </div>
     </div>
+    <div id="loading" class="loading-bar" />
   </div>
 </template>
 
 <script>
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 // eslint-disable-next-line import/no-named-as-default
 import gsap from 'gsap'
 import pX from '~/assets/px.png'
@@ -30,14 +33,44 @@ import nZ from '~/assets/nz.png'
 // import fragment from '~/shaders/aboutFragment.glsl'
 // import vertex from '~/shaders/aboutVertex.glsl'
 // import custom from '~/components/transitions'
+const header = document.getElementById('header')
+const footer = document.getElementById('footer')
+
 export default {
-  name: 'About',
-  layout: 'default',
+  name: 'Preload',
+  // layout: 'default',
   // transition: custom,
   mounted () {
+    gsap.set(header, {
+      autoAlpha: 0
+    })
+    gsap.set(footer, {
+      autoAlpha: 0
+    })
+    const loadingBarElement = document.getElementById('loading')
+    // console.log(loadingBarElement)
+
+    const loadingManager = new THREE.LoadingManager(
+
+      // Loaded
+      () => {
+        gsap.delayedCall(1, () => {
+          gsap.to(overlayMaterial.uniforms.uAlpha, { duration: 3, value: 0 })
+          loadingBarElement.classList.add('ended')
+          loadingBarElement.style.transform = ''
+        })
+      },
+
+      // Progress
+      (itemUrl, itemsLoaded, itemsTotal) => {
+        const progressRatio = itemsLoaded / itemsTotal
+        loadingBarElement.style.transform = `scaleX(${progressRatio})`
+        // console.log(progressRatio)
+      }
+    )
+
     // const raycaster = new THREE.Raycaster()
     const scene = new THREE.Scene()
-    const scene2 = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(
       70,
       innerWidth / innerHeight,
@@ -55,7 +88,7 @@ export default {
     // document.body.appendChild(renderer.domElement)
 
     // eslint-disable-next-line no-new
-    new OrbitControls(camera, renderer.domElement)
+    // new OrbitControls(camera, renderer.domElement)
 
     // const backlight = new THREE.DirectionalLight(0xFFFFFF, 1)
     // backlight.position.set(0, 1, -1)
@@ -64,6 +97,30 @@ export default {
     // const light = new THREE.DirectionalLight(0xFFFFFF, 1)
     // light.position.set(0, -1, 1)
     // scene.add(light)
+
+    const overlayGeometry = new THREE.PlaneBufferGeometry(2, 2, 1, 1)
+    const overlayMaterial = new THREE.ShaderMaterial({
+      transparent: true,
+      uniforms:
+    {
+      uAlpha: { value: 2 }
+    },
+      vertexShader: `
+        void main()
+        {
+            gl_Position = vec4(position, 1.0);
+        }
+    `,
+      fragmentShader: `
+    uniform float uAlpha;
+        void main()
+        {
+            gl_FragColor = vec4(0.0, 0.0, 0.0, uAlpha);
+        }
+    `
+    })
+    const overlay = new THREE.Mesh(overlayGeometry, overlayMaterial)
+    scene.add(overlay)
 
     const loader = new THREE.TextureLoader()
     // const textureCube = loader.load([pX, pY, pZ, nX, nY, nZ])
@@ -89,6 +146,56 @@ export default {
     const mesh = new THREE.Mesh(boxGeometry, materials)
     scene.add(mesh)
 
+    mesh.position.set(0, 0, 0)
+
+    gsap.set(mesh.position, {
+      x: 500
+    })
+    gsap.fromTo(mesh.position, {
+      x: 500,
+      duration: 1.5,
+      ease: 'bounce.inOut'
+    },
+    {
+      x: 0
+    })
+
+    const fontLoader = new FontLoader(loadingManager)
+    fontLoader.load(
+      '~/assets/fonts/JetBrainsMono/JetBrainsMonoExtraBold_Regular.json',
+      (font) => {
+        const textGeometry = new TextGeometry(
+          'LOADING',
+          {
+            font,
+            size: 2,
+            height: 0.5,
+            curveSegments: 3,
+            bevelEnabled: true,
+            bevelThickness: 0.05,
+            bevelSize: 0.1,
+            bevelOffset: -0.05,
+            bevelSegments: 1
+          }
+        )
+        // textGeometry.computeBoundingBox()
+        // textGeometry.translate(
+        //     - (textGeometry.boundingBox.max.x - 0.02) * 0.5,
+        //     - (textGeometry.boundingBox.max.y - 0.02) * 0.5,
+        //     - (textGeometry.boundingBox.max.z - 0.03) * 0.5
+        // )
+        textGeometry.center()
+
+        textGeometry.computeBoundingBox()
+        // console.log(textGeometry.boundingBox)
+        const material = new THREE.MeshBasicMaterial({ color: 0xFFFFFF })
+        // textMaterial.wireframe = true
+        const text = new THREE.Mesh(textGeometry, material)
+        scene.add(text)
+        text.position.set(0, -1, 5)
+        text.rotation.y = Math.PI
+      })
+
     // const material = new THREE.ShaderMaterial({
     //   uniforms: {
     //     t1: { value: new THREE.TextureLoader().load(t1) }
@@ -101,146 +208,13 @@ export default {
     // const plane = new THREE.Mesh(geometry, material)
     // scene2.add(plane)
 
-    // const ringGroup = new THREE.Group()
-    const ringGeometry = new THREE.TorusBufferGeometry(5, 1, 8, 36)
-    const ringMaterial = new THREE.MeshBasicMaterial({
-      color: 0x993366,
-      transparent: true,
-      blending: THREE.AdditiveBlending
-    })
-    const ringMesh = new THREE.Mesh(ringGeometry, ringMaterial)
-    scene2.add(ringMesh)
-    ringMesh.position.set(10, 5, 10)
-
-    const ring2Geometry = new THREE.TorusBufferGeometry(7, 1, 8, 36)
-    const ring2Material = new THREE.MeshBasicMaterial({
-      color: 0x993366,
-      transparent: true,
-      blending: THREE.AdditiveBlending
-    })
-    const ring2Mesh = new THREE.Mesh(ring2Geometry, ring2Material)
-    scene2.add(ring2Mesh)
-    ring2Mesh.position.set(10, 5, 10)
-
-    const ring3Geometry = new THREE.TorusBufferGeometry(9, 1, 8, 36)
-    const ring3Material = new THREE.MeshBasicMaterial({
-      color: 0x993366,
-      transparent: true,
-      wireframe: true,
-      blending: THREE.AdditiveBlending
-    })
-    const ring3Mesh = new THREE.Mesh(ring3Geometry, ring3Material)
-    scene2.add(ring3Mesh)
-    ring3Mesh.position.set(10, 5, 10)
-
-    const tl = gsap.timeline({
-      defaults: {
-        duration: 0.8,
-        ease: 'power2.inOut'
-      }
-    })
-    tl.set(ringMesh.position, {
-      y: 300
-    })
-      .set(ring2Mesh.position, {
-        x: 300
-      })
-      .set(ring3Mesh.position, {
-        x: -500
-      })
-      .to(ringMesh.position, {
-        y: 5
-      }, 2)
-      .to(ring2Mesh.position, {
-        x: 10
-      }, 1)
-      .to(ring3Mesh.position, {
-        x: 10
-      })
-
     const mouse = {
       x: undefined,
       y: undefined
     }
-
-    document.querySelector('#button')
-      .addEventListener('click', (e) => {
-        e.preventDefault()
-        gsap.to('.wrapper', {
-          opacity: 0
-        })
-        gsap.to(camera.position, {
-          z: 25,
-          ease: 'power1.inOut',
-          duration: 2
-        })
-        gsap.to(camera.rotation, {
-          x: 1.57,
-          ease: 'power1.inOut',
-          duration: 2
-        })
-        gsap.to(camera.position, {
-          y: 1000,
-          ease: 'power1.in',
-          duration: 1,
-          delay: 1.5,
-          onComplete: () => {
-            this.$router.push('/preload')
-          }
-        })
-      })
-
     function animate () {
       requestAnimationFrame(animate)
-      renderer.render(scene2, camera)
-      ringMesh.rotation.x += 0.05
-      ring2Mesh.rotation.y += 0.04
-      // ring3Mesh.rotation.x += 0.03
-      // frame += 0.01
-      // raycaster for point hover
-      // raycaster.setFromCamera(mouse, camera)
-      // const intersects = raycaster.intersectObject(mesh)
-      // if (intersects.length > 0) {
-      //   const { color } = intersects[0].object.geometry.attributes
-
-      //   intersects[0].object.geometry.attributes.color.needsUpdate = true
-
-      //   const initialColor = {
-      //     r: 0,
-      //     g: 0.19,
-      //     b: 0.4
-      //   }
-
-      //   const hoverColor = {
-      //     r: 0.1,
-      //     g: 0.5,
-      //     b: 1
-      //   }
-
-      //   gsap.to(hoverColor, {
-      //     r: initialColor.r,
-      //     g: initialColor.g,
-      //     b: initialColor.b,
-      //     duration: 1,
-      //     onUpdate: () => {
-      //       // vertice 1
-      //       color.setX(intersects[0].face.a, hoverColor.r)
-      //       color.setY(intersects[0].face.a, hoverColor.g)
-      //       color.setZ(intersects[0].face.a, hoverColor.b)
-
-      //       // vertice 2
-      //       color.setX(intersects[0].face.b, hoverColor.r)
-      //       color.setY(intersects[0].face.b, hoverColor.g)
-      //       color.setZ(intersects[0].face.b, hoverColor.b)
-
-      //       // vertice 3
-      //       color.setX(intersects[0].face.c, hoverColor.r)
-      //       color.setY(intersects[0].face.c, hoverColor.g)
-      //       color.setZ(intersects[0].face.c, hoverColor.b)
-      //     }
-      //   })
-      // }
-      // plane.rotation.x += 0.005
+      renderer.render(scene, camera)
       mesh.rotation.y += 0.01
     }
 
@@ -289,7 +263,6 @@ export default {
     will-change: transform;
     /* transform: translateY(30px); */
   }
-
   .button--container {
     display: flex;
     justify-content: center;
@@ -310,7 +283,6 @@ export default {
     color: blue;
     background: white;
   }
-
   .title {
     width: 100px;
     position: absolute;
@@ -319,4 +291,23 @@ export default {
     border-radius: 25px;
     border: 2px solid red;
   }
+  .loading-bar {
+    color: #000000;
+    position: absolute;
+    top: 0%;
+    width: 100%;
+    height: 1px;
+    background: rgb(169, 223, 98);
+    transform: scaleX(0);
+    transform-origin: top left;
+    transition: transform 0.5s;
+    will-change: transform;
+    z-index: 100;
+    margin-left: -20px;
+}
+.loading-bar.ended {
+    opacity: 0;
+    transform-origin: top right;
+    transition: transform 1.5s ease-in-out;
+}
 </style>
