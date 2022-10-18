@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase/app'
 // import { getAnalytics } from 'firebase/analytics'
 import { getFirestore, collection } from 'firebase/firestore'
 import { getAnalytics, logEvent } from 'firebase/analytics'
+import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBR523bFu4MiQICSydeFFcb-OSjvRXEbJs',
@@ -15,10 +16,14 @@ const firebaseConfig = {
 }
 
 const app = initializeApp(firebaseConfig)
-// const analytics = getAnalytics(app)
+
+const appCheck = initializeAppCheck(app, {
+  provider: new ReCaptchaV3Provider('6Lcvy4oiAAAAAAKVGQvLQcxjKN-rw4gw094evDgW'),
+  isTokenAutoRefreshEnabled: true
+})
 
 const db = getFirestore(app)
 const analytics = getAnalytics(app)
 logEvent(analytics, 'notification_received')
 const messageColRef = collection(db, 'messages')
-export default messageColRef
+export { messageColRef, appCheck }

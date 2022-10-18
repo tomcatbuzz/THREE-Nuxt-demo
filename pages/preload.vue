@@ -231,6 +231,12 @@ export default {
       camera.updateProjectionMatrix()
       renderer.setSize(innerWidth, innerHeight)
     })
+
+    document.querySelector('.about--btn')
+      .addEventListener('click', (e) => {
+        e.preventDefault()
+        this.$router.push('/about')
+      })
   }
 }
 </script>

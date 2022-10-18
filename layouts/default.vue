@@ -148,6 +148,31 @@ export default {
     myTransition
   },
   mounted () {
+    const header = document.getElementById('header')
+    const footer = document.getElementById('footer')
+
+    gsap.set(header, {
+      autoAlpha: 0
+    })
+    gsap.set(footer, {
+      autoAlpha: 0
+    })
+    gsap.fromTo(header, {
+      autoAlpha: 0
+    },
+    {
+      autoAlpha: 1,
+      duration: 3,
+      ease: 'power2.inOut'
+    })
+    gsap.fromTo(footer, {
+      autoAlpha: 0
+    },
+    {
+      autoAlpha: 1,
+      duration: 3,
+      ease: 'power2.inOut'
+    })
     document.querySelector('#menu').addEventListener('click', () => {
       show()
     })
