@@ -52,6 +52,10 @@
             <input class="sendBtn" type="submit" value="send">
           </div>
         </div>
+        <small>This site is protected by reCAPTCHA and the Google
+          <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+          <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+        </small>
       </form>
       <Toast id="toast" key="toast" />
       <!-- <button id="test">
@@ -88,7 +92,12 @@ export default {
       contactMessage: null
     }
   },
-  mounted () {
+  async mounted () {
+    try {
+      await this.$recaptcha.init()
+    } catch (err) {
+      console.error(err)
+    }
     // const scene = new THREE.Scene()
     const scene2 = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(
@@ -285,6 +294,9 @@ export default {
     //     tl.play()
     //   })
   },
+  beforeDestroy () {
+    this.$recaptcha.destroy()
+  },
   methods: {
     generateToast () {
       const vw = window.innerWidth
@@ -312,12 +324,23 @@ export default {
     },
 
     async sendMessage () {
-      await addDoc(messageColRef, this.$data)
-      await this.$refs.form.reset()
-      await this.generateToast()
-      await setTimeout(() => {
-        this.goHome()
-      }, 5300)
+      try {
+        const token = await this.$recaptcha.execute('contact')
+        const recaptcha = await this.$axios.post('https://us-central1-tomcatbuzzweb.cloudfunctions.net/sendRecaptcha', { token })
+        console.log('recaptcha', recaptcha.data)
+        if (recaptcha.data.success) {
+          await addDoc(messageColRef, this.$data)
+          await this.$refs.form.reset()
+          await this.generateToast()
+          await setTimeout(() => {
+            this.goHome()
+          }, 5300)
+        } else {
+          alert('Oops something went wrong, try again')
+        }
+      } catch (err) {
+        console.error(err)
+      }
     }
   }
 }

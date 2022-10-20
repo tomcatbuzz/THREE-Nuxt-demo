@@ -46,8 +46,6 @@ export default {
     middleware: 'pages'
   },
 
-  appCheck: true,
-
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
@@ -70,7 +68,16 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/recaptcha'
+  ],
+
+  recaptcha: {
+    hideBadge: true,
+    siteKey: '6Lcvy4oiAAAAAAKVGQvLQcxjKN-rw4gw094evDgW',
+    version: 3
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
