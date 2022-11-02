@@ -2,7 +2,7 @@
   <div data-color="#2196f3">
     <canvas ref="canvas3" />
     <section id="section">
-      <form ref="form" class="wrapper" autocomplete="off" @submit.prevent="sendMessage">
+      <form ref="form" class="wrapper" autocomplete="off" @submit.prevent="onSubmit">
         <h2>
           Contact Us
         </h2>
@@ -49,7 +49,7 @@
         </div>
         <div class="row100">
           <div class="col">
-            <input class="sendBtn" type="submit" value="send">
+            <input class="sendBtn" type="submit">
           </div>
         </div>
         <small>This site is protected by reCAPTCHA and the Google
@@ -96,8 +96,21 @@ export default {
     try {
       await this.$recaptcha.init()
     } catch (err) {
-      console.error(err)
+      throw new Error(`index# Problem initializing ReCaptcha: ${err}.`)
     }
+    // const recaptchaSrc = `https://www.google.com/recaptcha/api.js?render=${process.env.RECAPTCHA_SITE_KEY}`
+    // const recpatchaScript = document.createElement('script')
+    // recpatchaScript.src = recaptchaSrc
+    // document.head.appendChild(recpatchaScript)
+
+    // const recaptchaScript = document.createElement('script')
+    // recaptchaScript.setAttribute(
+    //   'src',
+    //   'https://www.google.com/recaptcha/api.js?render=' +
+    //     process.env.RECAPTCHA_SITE_KEY
+    // )
+    // document.head.appendChild(recaptchaScript)
+
     // const scene = new THREE.Scene()
     const scene2 = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(
@@ -323,23 +336,27 @@ export default {
       this.$router.push('/')
     },
 
-    async sendMessage () {
+    async onSubmit () {
       try {
-        const token = await this.$recaptcha.execute('contact')
-        const recaptcha = await this.$axios.post('https://us-central1-tomcatbuzzweb.cloudfunctions.net/sendRecaptcha', { token })
-        console.log('recaptcha', recaptcha.data)
-        if (recaptcha.data.success) {
+        // Start the verification process
+        const token = await this.$recaptcha.execute('form')
+
+        const recaptcha = await this.$axios.post(
+          'https://us-central1-tomcatbuzzweb.cloudfunctions.net/sendRecaptcha', { token }
+        )
+        const score = recaptcha.data.score
+        if (score > 0.5) {
           await addDoc(messageColRef, this.$data)
           await this.$refs.form.reset()
           await this.generateToast()
           await setTimeout(() => {
             this.goHome()
-          }, 5300)
+          }, 5400)
         } else {
-          alert('Oops something went wrong, try again')
+          this.$recaptcha.reset()
         }
       } catch (err) {
-        console.error(err)
+        throw new Error(`index# Problem Sending: ${err}.`)
       }
     }
   }
@@ -543,6 +560,17 @@ export default {
     opacity: 0;
     transform: translateY(30px);
   } */
+
+  .message {
+    border: solid 1px grey;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+.notification-text {
+  font-size: 14px;
+}
 
   @media screen and (min-width: 320px) and (max-width: 468px) and (orientation: portrait) {
     section {
