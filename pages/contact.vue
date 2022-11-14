@@ -339,12 +339,12 @@ export default {
     async onSubmit () {
       try {
         // Start the verification process
-        const captchaResponse = await this.$recaptcha.execute('form')
+        const token = await this.$recaptcha.execute('form')
 
         const recaptcha = await this.$axios.post(
-          `https://tomcatbuzzweb-backend.ue.r.appspot.com/test, ${captchaResponse}`
+          '/api/check-token', { token }
         )
-        console.log('token', captchaResponse)
+        console.log('token', token)
         // const score = recaptcha.data.score
         // console.log('score', score)
         if (recaptcha.data.success) {
