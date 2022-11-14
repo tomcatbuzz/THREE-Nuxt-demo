@@ -339,13 +339,15 @@ export default {
     async onSubmit () {
       try {
         // Start the verification process
-        const token = await this.$recaptcha.execute('form')
+        const captchaResponse = await this.$recaptcha.execute('form')
 
         const recaptcha = await this.$axios.post(
-          'https://us-central1-tomcatbuzzweb.cloudfunctions.net/sendRecaptcha', { token }
+          `https://tomcatbuzzweb-backend.ue.r.appspot.com/test, ${captchaResponse}`
         )
-        const score = recaptcha.data.score
-        if (score > 0.5) {
+        console.log('token', captchaResponse)
+        // const score = recaptcha.data.score
+        // console.log('score', score)
+        if (recaptcha.data.success) {
           await addDoc(messageColRef, this.$data)
           await this.$refs.form.reset()
           await this.generateToast()
@@ -353,7 +355,8 @@ export default {
             this.goHome()
           }, 5400)
         } else {
-          this.$recaptcha.reset()
+          // this.$recaptcha.reset()
+          throw new Error('message not sent')
         }
       } catch (err) {
         throw new Error(`index# Problem Sending: ${err}.`)

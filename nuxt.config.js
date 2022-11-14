@@ -46,6 +46,19 @@ export default {
     middleware: 'pages'
   },
 
+  // Proxy test for CORS errors
+  axios: {
+    proxy: true
+  },
+  proxy: {
+    '/captcha-api/': {
+      target: 'https://tomcatbuzzweb-backend.ue.r.appspot.com/test',
+      pathRewrite: {
+        '^/captcha-api': ''
+      }
+    }
+  },
+
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
