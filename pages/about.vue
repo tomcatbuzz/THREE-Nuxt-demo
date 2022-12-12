@@ -6,7 +6,7 @@
         About
       </h1>
       <div class="button--container">
-        <button class="about--btn" id='button'>
+        <button id="button" class="about--btn">
           Dude
         </button>
         <span class="title">Dude Button</span>

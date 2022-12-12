@@ -21,6 +21,7 @@
     "core-js": "^3.19.3",
     "dat.gui": "^0.7.9",
     "firebase": "^9.8.0",
+    "glsl-fractal-brownian-noise": "^1.1.0",
     "glsl-noise": "^0.0.0",
     "glsl-rotate": "^2.0.0",
     "gsap": "^3.10.2",

@@ -32,6 +32,7 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '~/assets/transition.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -46,13 +47,14 @@ export default {
     middleware: 'pages'
   },
 
-  serverMiddleware: [
-    { path: '/api/check-token', handler: '~/middleware/recaptcha' }
-  ],
+  // THIS code is working middleware and privateconfig
+  // serverMiddleware: [
+  //   { path: '/api/check-token', handler: '~/middleware/recaptcha' }
+  // ],
 
-  privateRuntimeConfig: {
-    secretKey: process.env.RECAPTCH_SECRET_KEY
-  },
+  // privateRuntimeConfig: {
+  //   secretKey: process.env.RECAPTCH_SECRET_KEY
+  // },
 
   // Proxy test for CORS errors
   // axios: {
@@ -96,8 +98,8 @@ export default {
   ],
 
   recaptcha: {
-    hideBadge: true,
-    siteKey: '6Lcvy4oiAAAAAAKVGQvLQcxjKN-rw4gw094evDgW',
+    hideBadge: false,
+    siteKey: process.env.RECAPTCHA_SITE_KEY,
     version: 3
   },
 

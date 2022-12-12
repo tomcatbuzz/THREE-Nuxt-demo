@@ -23,7 +23,7 @@ export default {
         autoAlpha: 0
       }, {
         autoAlpha: 1,
-        duration: 1.5,
+        duration: 5.5,
         ease: 'power1.inOut',
         onComplete: done
       })
@@ -33,7 +33,7 @@ export default {
         autoAlpha: 1
       }, {
         autoAlpha: 0,
-        duration: 1.5,
+        duration: 5.5,
         ease: 'power1.out',
         onComplete: done
       })

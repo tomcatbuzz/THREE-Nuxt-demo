@@ -112,10 +112,13 @@
       </svg>
     </div>
     <main>
+      <div class="layout__animation">
+        <Animation />
+      </div>
       <div class="container">
-        <myTransition>
-          <Nuxt />
-        </myTransition>
+        <!-- <myTransition> -->
+        <Nuxt />
+        <!-- </myTransition> -->
       </div>
     </main>
     <footer id="footer">
@@ -136,7 +139,13 @@
 <script>
 // eslint-disable-next-line import/no-named-as-default
 import gsap from 'gsap'
-import myTransition from '~/components/myTransition.vue'
+// import myTransition from '~/components/myTransition.vue'
+// import { useSmoke } from '~/transitions/smoke'
+import Animation from '~/components/Animation.vue'
+// import newTransition from '~/components/newTransition.vue'
+
+// const { enterAnimation, leaveAnimation } = useSmoke()
+// import { useSmoke } from '~/transitions/smoke'
 // import Tooltip from '~/components/Tooltip'
 // import twitterImg from '~/assets/twitter.png'
 // import githubImg from '~/assets/github.png'
@@ -145,7 +154,8 @@ import myTransition from '~/components/myTransition.vue'
 export default {
   name: 'DefaultLayout',
   components: {
-    myTransition
+    // myTransition,
+    Animation
   },
   mounted () {
     const header = document.getElementById('header')

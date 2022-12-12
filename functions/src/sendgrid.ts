@@ -26,11 +26,11 @@ export const sendContactMessage = functions.firestore.document('/messages/{pushK
           Sender's Last Name: ${newValue.contactLastName} \n
           Sender's Email: ${newValue.contactEmail} \n
           Sender's Phone: ${newValue.contactPhone} \n
-          Content: ${newValue.contactMessage}`,
+          Content: ${newValue.contactMessage}`
     }
     return sgMail.send(msg)
       .then(() => console.log('email sent!'))
-      .catch((error: any) => {
+      .catch((error) => {
         console.log(error)
       })
   })

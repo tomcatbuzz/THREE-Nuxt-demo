@@ -52,7 +52,7 @@
             <input class="sendBtn" type="submit">
           </div>
         </div>
-        <small>This site is protected by reCAPTCHA and the Google
+        <small class="recaptcha">This site is protected by reCAPTCHA and the Google
           <a href="https://policies.google.com/privacy">Privacy Policy</a> and
           <a href="https://policies.google.com/terms">Terms of Service</a> apply.
         </small>
@@ -71,6 +71,7 @@ import gsap from 'gsap'
 import { addDoc } from 'firebase/firestore'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import axios from 'axios'
 import sphereFragment from '~/shaders/sphereFragment.glsl'
 import sphereVertex from '~/shaders/sphereVertex.glsl'
 import Cfragment from '~/shaders/contactFragment.glsl'
@@ -197,16 +198,17 @@ export default {
     }
 
     function animate () {
-      requestAnimationFrame(animate)
-      renderer.render(scene2, camera)
-      plane.rotation.y += 0.005
-      // sphere2.rotation.x += 0.005
-      sphere2material.uniforms.uTime.value = clock.getElapsedTime()
-      // scene2.children.forEach((sphere2) => {
-      //   sphere2material.uniforms.uTime.value = clock.getElapsedTime()
-      // })
+      // eslint-disable-next-line quotes
+      const mediaQuery = window.matchMedia(`(prefers-reduced-motion: reduce)`) === true || window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true
 
-      // mesh.rotation.y += 0.01
+      if (!mediaQuery) {
+        renderer.render(scene2, camera)
+        requestAnimationFrame(animate)
+        plane.rotation.y += 0.005
+        sphere2material.uniforms.uTime.value = clock.getElapsedTime()
+      } else {
+        renderer.render(scene2, camera)
+      }
     }
 
     animate()
@@ -340,14 +342,18 @@ export default {
       try {
         // Start the verification process
         const token = await this.$recaptcha.execute('form')
-
-        const recaptcha = await this.$axios.post(
-          '/api/check-token', { token }
+        const url = 'https://us-central1-tomcatbuzzweb.cloudfunctions.net/checkRecaptcha'
+        // Working code with Proxy
+        // const recaptcha = await this.$axios.post(
+        //   '/api/check-token', { token }
+        // )
+        const recaptcha = await axios.post(
+          `${url}?token=${token}`
         )
         console.log('token', token)
-        // const score = recaptcha.data.score
+        const score = recaptcha.data.score
         // console.log('score', score)
-        if (recaptcha.data.success) {
+        if (score >= 0.5) {
           await addDoc(messageColRef, this.$data)
           await this.$refs.form.reset()
           await this.generateToast()
@@ -649,5 +655,14 @@ export default {
     .wrapper .row100 .col label {
       font-size: 1em;
     }
+  }
+
+  .recaptcha {
+    color: white;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .recaptcha a {
+    color: green;
   }
 </style>
